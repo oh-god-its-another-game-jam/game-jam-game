@@ -5,4 +5,6 @@
 [node name="Sound" type="Node2D" unique_id=457052338]
 script = ExtResource("1_ii1ul")
 
+[node name="enemy_SFX" type="AudioStreamPlayer" parent="." unique_id=2043081903]
+
 [node name="player_SFX" type="AudioStreamPlayer" parent="." unique_id=852893175]

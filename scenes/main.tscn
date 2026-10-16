@@ -22,6 +22,7 @@ navigation_polygon = SubResource("NavigationPolygon_glkys")
 [node name="BasicEnemy" parent="." unique_id=1883996621 instance=ExtResource("1_jyhfs")]
 position = Vector2(424, -104)
 metadata/movement_speed = 100.0
+metadata/los_range = 100000.0
 
 [node name="Player" parent="." unique_id=401100565 instance=ExtResource("1_sugp2")]
 

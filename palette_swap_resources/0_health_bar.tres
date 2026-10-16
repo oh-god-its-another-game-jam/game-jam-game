@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" script_class="PaletteMaterial" format=3 uid="uid://bsmrf3p5ivm6x"]
+
+[ext_resource type="Script" uid="uid://vrs1twpulcy0" path="res://palette_swap_resources/PaletteMaterial.gd" id="1_loi0f"]
+
+[resource]
+script = ExtResource("1_loi0f")
+metadata/_custom_type_script = "uid://vrs1twpulcy0"

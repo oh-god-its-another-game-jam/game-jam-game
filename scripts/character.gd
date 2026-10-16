@@ -3,6 +3,9 @@ extends Sprite2D
 var antigen_scene = preload("res://scenes/antigen.tscn")
 
 @onready var antigen_spawner = $AntigenSpawner
+@onready var health_bar = get_tree().get_first_node_in_group("PlayerHealthBar")
+
+var health_bar_inter_frame_time = 0.1
 
 # --- PLAYER STATS ---
 
@@ -36,11 +39,8 @@ var dashing: bool = false
 var base_scale: Vector2
 var dash_glucose_use: float = 20.0
 
-# --- SOUND ---
-signal error_sound()
 
-
-func _ready() -> void:
+func _ready() -> void:	
 	base_scale = scale
 	
 	glucose_changed.emit.call_deferred(glucose, max_glucose)
@@ -48,7 +48,7 @@ func _ready() -> void:
 
 func shoot_antigen():
 	if ammo == 0: # @GoldenFootie should we do glucose for this?
-		error_sound.emit()
+		Events.error_sound.emit()
 		return
 	ammo -= 1
 	
@@ -61,7 +61,7 @@ func dash():
 	if dashing:
 		return
 	elif glucose < dash_glucose_use:
-		error_sound.emit()
+		Events.error_sound.emit()
 		return
 	
 	glucose -= dash_glucose_use
@@ -79,11 +79,19 @@ func dash():
 	dash_tween.tween_property(self, "scale", base_scale, 0.15)\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)
-
-	await get_tree().create_timer(dash_duration).timeout
+		
+	health_bar.material = load("res://palette_swap_resources/1_invuln_health_bar_light.tres")
+	await get_tree().create_timer(dash_duration/4).timeout
+	health_bar.material = load("res://palette_swap_resources/2_invuln_health_bar_full.tres")
+	await get_tree().create_timer(dash_duration/2).timeout
+	health_bar.material = load("res://palette_swap_resources/3_invuln_health_bar_dark.tres")
+	await get_tree().create_timer(dash_duration/4).timeout
+	health_bar.material = load("res://palette_swap_resources/0_health_bar.tres")
 	dashing = false
 
 func _physics_process(delta: float) -> void:
+	if health <= 0:
+		_game_over()
 	# --- SHOOTING ---
 	if not dashing:
 		# Makes the player look at the mouse
@@ -96,8 +104,7 @@ func _physics_process(delta: float) -> void:
 	# --- DASHING ---
 	
 	if Input.is_action_just_pressed("right_click"):
-		dash()
-	
+		dash()	
 	
 	if dashing:
 		position += dash_direction * dash_speed * delta
@@ -159,10 +166,18 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		if body.is_in_group("Toxins"):
 			print("Player hit")
 			health -= body.get_meta("attack_damage",0)
-			health_changed.emit.call_deferred(health, max_health)
 			body.queue_free()
-	if health <= 0:
-		_game_over()
+			_animate_health_bar()
 
-
+func _animate_health_bar() -> void:
+	# Animation (please forgive me for my sins, I can't find a better way to do this):
+	health_bar.material = load("res://palette_swap_resources/1_health_bar_inside_white.tres")
+	await get_tree().create_timer(health_bar_inter_frame_time).timeout
+	health_bar.material = load("res://palette_swap_resources/2_health_bar_white.tres")
+	health_changed.emit.call_deferred(health, max_health)
+	await get_tree().create_timer(health_bar_inter_frame_time).timeout
+	health_bar.material = load("res://palette_swap_resources/3_health_bar_outside_white.tres")
+	await get_tree().create_timer(health_bar_inter_frame_time).timeout
+	health_bar.material = load("res://palette_swap_resources/0_health_bar.tres")
+	
 # obligatory pf 🏳️‍🌈
