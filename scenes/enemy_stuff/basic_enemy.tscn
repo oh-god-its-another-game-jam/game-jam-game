@@ -17,11 +17,11 @@ metadata/max_glucose = 100.0
 metadata/glucose_regen = 0.0
 metadata/health_regen = 0.0
 metadata/movement_speed = 10.0
-metadata/attack_range = 0.0
+metadata/attack_range = 400.0
 metadata/needs_los = false
 metadata/los_range = 100.0
 metadata/scale = 1.0
-metadata/attack_damage = 100.0
+metadata/attack_damage = 1000.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=507440377]
 script = ExtResource("2_ibjif")
@@ -33,7 +33,7 @@ collision_mask = 3
 texture = SubResource("CanvasTexture_qhqgy")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="Sprite2D" unique_id=1736612286]
-collision_mask = 4
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/CharacterBody2D" unique_id=950839941]
 rotation = 0.00016523933

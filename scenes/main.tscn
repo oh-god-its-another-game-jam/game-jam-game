@@ -25,6 +25,7 @@ metadata/movement_speed = 100.0
 metadata/los_range = 100000.0
 
 [node name="Player" parent="." unique_id=401100565 instance=ExtResource("1_sugp2")]
+position = Vector2(-1258, 0)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=943063168]
 script = ExtResource("2_0wfyh")
