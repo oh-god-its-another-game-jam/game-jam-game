@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1792570899|4757811';
+const CACHE_VERSION = '1792572185|5374561';
 /** @type {string} */
 const CACHE_PREFIX = 'game jam game-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
