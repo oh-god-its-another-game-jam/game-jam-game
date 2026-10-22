@@ -43,6 +43,8 @@ var antigen_cooldown_timer = 0
 var antigen_cooldown_time = 0.2
 var parrying = false
 
+var frame_passed = false
+
 # Godot functions:
 func _ready() -> void:
 	glucose_changed.emit.call_deferred(glucose, max_glucose)
@@ -88,8 +90,11 @@ func _process(delta: float) -> void:
 	if health != old_health:
 		health_changed.emit(health, max_health)
 	
-	if Input.is_action_just_pressed("escape"):
+	if Input.is_action_just_pressed("escape") && frame_passed:
+		frame_passed = false
 		pause_menu.show()
+		return
+	frame_passed = true
 
 # User functions:
 # Movement:
