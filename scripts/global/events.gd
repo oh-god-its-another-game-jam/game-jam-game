@@ -11,8 +11,9 @@ signal notify_send
 signal enemy_resized
 @warning_ignore_restore("unused_signal")
 
-var enemy_size_divisor: float = 4.0
-var enemy_max_scale: float = 0.75 # 3x starting size
+var enemy_size_divisor: float = 2.0
+var enemy_max_scale: float = 1.5 # 3x starting size
+var enemy_min_scale: float = 0.25 # 1/2x starting size
 
 var effects_scale: float = 100.0
 

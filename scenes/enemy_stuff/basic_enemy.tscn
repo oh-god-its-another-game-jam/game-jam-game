@@ -27,7 +27,7 @@ cull_mode = 2
 polygon = PackedVector2Array(36, 0, 33.26, 13.78, 25.46, 25.46, 13.78, 33.26, 0, 36, -13.78, 33.26, -25.46, 25.46, -33.26, 13.78, -36, 0, -33.26, -13.78, -25.46, -25.46, -13.78, -33.26, 0, -36, 13.78, -33.26, 25.46, -25.46, 33.26, -13.78)
 
 [node name="BasicEnemy" type="Node2D" unique_id=1883996621 groups=["Persist"]]
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_7jpia")
 metadata/max_health = 100.0
 metadata/max_glucose = 100.0
