@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://c42rvvvlc7iwv"]
 
 [ext_resource type="Script" uid="uid://byuwvg1sm1gfe" path="res://scripts/enemy_stuff/basic_enemy.gd" id="1_7jpia"]
-[ext_resource type="Texture2D" uid="uid://dneywvfhqgxru" path="res://artwork/icon.svg" id="2_8xi43"]
 [ext_resource type="Script" uid="uid://qga0burrlqo7" path="res://scripts/enemy_stuff/enemy_nav_agent.gd" id="2_ibjif"]
 [ext_resource type="Shader" uid="uid://d4eavjtjvnlhs" path="res://scripts/enemy_stuff/enemy_dissolve.gdshader" id="3_3065o"]
+[ext_resource type="Texture2D" uid="uid://b7pkyrtg25tka" path="res://artwork/enemy_stuff/Virus1.png" id="4_3065o"]
+[ext_resource type="Texture2D" uid="uid://bjmm6b5tqhhqp" path="res://artwork/enemy_stuff/Virus1_n.png" id="5_uyv16"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qlg0r"]
 resource_local_to_scene = true
@@ -11,15 +12,19 @@ shader = ExtResource("3_3065o")
 shader_parameter/progress = 0.0
 shader_parameter/block_size = 2.0
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_qhqgy"]
-diffuse_texture = ExtResource("2_8xi43")
+[sub_resource type="CanvasTexture" id="CanvasTexture_uyv16"]
+diffuse_texture = ExtResource("4_3065o")
+normal_texture = ExtResource("5_uyv16")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibjif"]
-size = Vector2(109, 113)
+[sub_resource type="CircleShape2D" id="CircleShape2D_3065o"]
+radius = 36.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uyv16"]
+radius = 36.22154
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_yx0xg"]
-cull_mode = 1
-polygon = PackedVector2Array(-53, -57, -53, 57, 55, 57, 55, -57)
+cull_mode = 2
+polygon = PackedVector2Array(36, 0, 33.26, 13.78, 25.46, 25.46, 13.78, 33.26, 0, 36, -13.78, 33.26, -25.46, 25.46, -33.26, 13.78, -36, 0, -33.26, -13.78, -25.46, -25.46, -13.78, -33.26, 0, -36, 13.78, -33.26, 25.46, -25.46, 33.26, -13.78)
 
 [node name="BasicEnemy" type="Node2D" unique_id=1883996621 groups=["Persist"]]
 scale = Vector2(0.25, 0.25)
@@ -54,21 +59,25 @@ collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=529130266]
 material = SubResource("ShaderMaterial_qlg0r")
-texture = SubResource("CanvasTexture_qhqgy")
+scale = Vector2(4, 4)
+texture = SubResource("CanvasTexture_uyv16")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=950839941]
+position = Vector2(-4, -4)
 rotation = 0.00016523933
-shape = SubResource("RectangleShape2D_ibjif")
+shape = SubResource("CircleShape2D_3065o")
 
 [node name="Hitbox" type="Area2D" parent="CharacterBody2D" unique_id=903805313]
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Hitbox" unique_id=1382414125]
+position = Vector2(-4, -4)
 rotation = 0.00016523933
-shape = SubResource("RectangleShape2D_ibjif")
+shape = SubResource("CircleShape2D_uyv16")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="CharacterBody2D" unique_id=1954342921]
+position = Vector2(-4, -4)
 occluder = SubResource("OccluderPolygon2D_yx0xg")
 
 [node name="Centre" type="Marker2D" parent="." unique_id=1964291034]
