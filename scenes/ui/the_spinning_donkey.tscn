@@ -4,6 +4,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bsfie0e3287kv" path="res://artwork/donkey/donkey.obj" id="1_o4fvd"]
 [ext_resource type="Texture2D" uid="uid://0d68m7y7uve2" path="res://artwork/donkey/donkey_BaseMap.png" id="2_w4dg0"]
 [ext_resource type="Script" uid="uid://dbfls3b4i6ixo" path="res://scripts/ui/spinning_donkey_3d.gd" id="3_w4dg0"]
+[ext_resource type="ArrayMesh" uid="uid://bdxj4uej05va3" path="res://artwork/donkey/scene.gltf" id="5_dggn8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yx0xg"]
 albedo_texture = ExtResource("2_w4dg0")
@@ -32,3 +33,9 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.14
 mesh = ExtResource("1_o4fvd")
 surface_material_override/0 = SubResource("StandardMaterial3D_yx0xg")
 script = ExtResource("3_w4dg0")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Node3D" unique_id=1984305065]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0.954597, 0.6039505)
+mesh = ExtResource("5_dggn8")
+script = ExtResource("3_w4dg0")
+speed = 20.0

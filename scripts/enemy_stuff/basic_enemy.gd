@@ -106,6 +106,8 @@ func _process(delta: float) -> void:
 		Vector2(get_meta("scale"),get_meta("scale")) / Events.enemy_size_divisor,
 		time_to_resize
 	)
+	if scale.x < Events.enemy_min_scale:
+		scale = Vector2(Events.enemy_min_scale,Events.enemy_min_scale)
 	
 	if health_regen > 0:
 		health = clamp(health + health_regen * delta, -max_health, max_health)
