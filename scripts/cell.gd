@@ -62,10 +62,18 @@ var previous_collisions = []
 var spawn_timer
 var spawn_time = 15 # How long it takes for enemies to spawn in seconds
 
+@onready var sprite = $Sprite2D
+@onready var sprite_texture = sprite.texture
+var good_cell_asset = preload("res://artwork/Cell/CellGood.png")
+var bad_cell_asset = preload("res://artwork/Cell/CellBad.png")
+
 signal captured_by_player
 
 # Godot functions:
 func _ready() -> void:
+	if sprite_texture:
+		sprite.texture = sprite_texture.duplicate()
+		sprite_texture = sprite.texture
 	_create_spawn_timer()
 	
 	regen_emitter.amount = round(base_particle_amount * (Events.effects_scale/100))
@@ -73,9 +81,11 @@ func _ready() -> void:
 	if controlled_by == "player":
 		light.color = "1CEE24"
 		regen_emitter.texture = player_regen_texture
+		sprite_texture.diffuse_texture = good_cell_asset
 	else:
 		light.color = "EE1C24"
 		regen_emitter.texture = enemy_regen_texture
+		sprite_texture.diffuse_texture = bad_cell_asset
 	
 	_change_health(health,max_health)
 
@@ -205,6 +215,7 @@ func _capture() -> void:
 func _virus_capture() -> void:
 	controlled_by = "enemy"
 	regen_emitter.texture = enemy_regen_texture
+	sprite_texture.diffuse_texture = bad_cell_asset
 	light.color = "EE1C24"
 	
 	state = State.regen
@@ -220,6 +231,7 @@ func _player_capture() -> void:
 	
 	controlled_by = "player"
 	regen_emitter.texture = player_regen_texture
+	sprite_texture.diffuse_texture = good_cell_asset
 	light.color = "1CEE24"
 	
 	state = State.regen
@@ -362,9 +374,12 @@ func load_data(data: Dictionary) -> void:
 	if controlled_by == "player":
 		light.color = "1CEE24"
 		regen_emitter.texture = player_regen_texture
+		sprite_texture.diffuse_texture = good_cell_asset
+		
 	else:
 		light.color = "EE1C24"
 		regen_emitter.texture = enemy_regen_texture
+		sprite_texture.diffuse_texture = bad_cell_asset
 
 	_change_health(health, max_health)
 

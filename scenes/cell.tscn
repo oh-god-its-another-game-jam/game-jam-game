@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c6v7qof2dbml5" path="res://scripts/cell.gd" id="1_upbjj"]
 [ext_resource type="Texture2D" uid="uid://cfmw13ov4gnxv" path="res://artwork/MainChara/neutral_light.webp" id="2_0s7o3"]
 [ext_resource type="Shader" uid="uid://d4eavjtjvnlhs" path="res://scripts/enemy_stuff/enemy_dissolve.gdshader" id="2_ds1sf"]
-[ext_resource type="Texture2D" uid="uid://dneywvfhqgxru" path="res://artwork/icon.svg" id="3_ecwuj"]
+[ext_resource type="Texture2D" uid="uid://b7y4pwydqyt41" path="res://artwork/Cell/CellBad.png" id="3_ds1sf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k6tqi"]
 resource_local_to_scene = true
@@ -11,11 +11,14 @@ shader = ExtResource("2_ds1sf")
 shader_parameter/progress = 0.0
 shader_parameter/block_size = 2.0
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_4kve2"]
-diffuse_texture = ExtResource("3_ecwuj")
+[sub_resource type="CanvasTexture" id="CanvasTexture_ds1sf"]
+diffuse_texture = ExtResource("3_ds1sf")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ds1sf"]
+size = Vector2(40, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4tsc"]
-size = Vector2(109, 113)
+size = Vector2(40, 40)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yx0xg"]
 particle_flag_disable_z = true
@@ -25,7 +28,6 @@ initial_velocity_max = 700.0
 gravity = Vector3(0, 0, 0)
 
 [node name="Cell" type="Node2D" unique_id=1873970965 groups=["Persist", "cells", "movable"]]
-scale = Vector2(0.5, 0.5)
 script = ExtResource("1_upbjj")
 metadata/max_health = 500
 metadata/regen = 5.0
@@ -34,17 +36,17 @@ metadata/regen_range = 200.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=310833080]
 material = SubResource("ShaderMaterial_k6tqi")
-texture = SubResource("CanvasTexture_4kve2")
+texture = SubResource("CanvasTexture_ds1sf")
 
 [node name="CellBody" type="CharacterBody2D" parent="Sprite2D" unique_id=1925479969]
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/CellBody" unique_id=1243945999]
 rotation = 0.00016523933
-shape = SubResource("RectangleShape2D_k4tsc")
+shape = SubResource("RectangleShape2D_ds1sf")
 
 [node name="PointLight2D" type="PointLight2D" parent="Sprite2D" unique_id=1752685726]
-scale = Vector2(4.5, 4.5)
+scale = Vector2(2.25, 2.25)
 color = Color(0.93333334, 0.10980392, 0.14117648, 1)
 energy = 1.2
 shadow_enabled = true
@@ -59,10 +61,13 @@ rotation = 0.00016523933
 shape = SubResource("RectangleShape2D_k4tsc")
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=780294916]
-offset_left = -63.0
-offset_top = -95.0
-offset_right = 61.0
-offset_bottom = -65.0
+modulate = Color(1, 0, 1, 1)
+self_modulate = Color(1, 0, 1, 1)
+offset_left = -33.0
+offset_top = -43.0
+offset_right = 33.13334
+offset_bottom = -27.0
+show_percentage = false
 
 [node name="RegenEmitter" type="GPUParticles2D" parent="." unique_id=990900531]
 emitting = false
