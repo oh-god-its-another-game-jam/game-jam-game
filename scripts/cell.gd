@@ -290,7 +290,7 @@ func _regen_entites(_controlled_by, delta) -> void:
 	
 	if target != null and global_position.distance_to(target.global_position) < regen_range:
 		regen_emitter.look_at(target.global_position)
-		particle_speed = global_position.distance_to(target.global_position) * 2 / regen_emitter.lifetime 
+		particle_speed = global_position.distance_to(target.global_position) / regen_emitter.lifetime 
 		
 		var mat = regen_emitter.process_material as ParticleProcessMaterial
 		if mat:
