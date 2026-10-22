@@ -53,12 +53,36 @@ var path_next
 var segment_dist
 var idle_target_pos
 
+@onready var sprite = $CharacterBody2D/Sprite2D
+@onready var sprite_texture = sprite.texture
+var diffuse_1 = preload("res://artwork/enemy_stuff/Virus1.png")
+var normal_1 = preload("res://artwork/enemy_stuff/Virus1_n.png")
+var diffuse_2 = preload("res://artwork/enemy_stuff/Virus2.png")
+var normal_2 = preload("res://artwork/enemy_stuff/Virus2_n.png")
+var diffuse_3 = preload("res://artwork/enemy_stuff/Virus3.png")
+var normal_3 = preload("res://artwork/enemy_stuff/Virus3_n.png")
+var texture_rand = randi_range(1,3)
+
 # health bar
 @onready var health_bar: ProgressBar = $CharacterBody2D/HealthBar
 
 # Godot functions
 
 func _ready() -> void:
+	if sprite_texture:
+		sprite.texture = sprite_texture.duplicate()
+		sprite_texture = sprite.texture
+	
+	if texture_rand == 1:
+		sprite_texture.diffuse_texture = diffuse_1
+		sprite_texture.normal_texture = normal_1
+	elif texture_rand == 2:
+		sprite_texture.diffuse_texture = diffuse_2
+		sprite_texture.normal_texture = normal_2
+	else:
+		sprite_texture.diffuse_texture = diffuse_3
+		sprite_texture.normal_texture = normal_3
+	
 	scale = Vector2(get_meta("scale"),get_meta("scale")) / Events.enemy_size_divisor
 	
 	if scale.x > Events.enemy_max_scale:
@@ -360,7 +384,8 @@ func save() -> Dictionary:
 		"movement_speed": movement_speed,
 		"attack_damage": attack_damage,
 		"reload": reload,
-		"enemy_size_divisor": Events.enemy_size_divisor
+		"enemy_size_divisor": Events.enemy_size_divisor,
+		"texture_rand": texture_rand
 	}
 
 	return save_dict
@@ -377,8 +402,19 @@ func load_data(data: Dictionary) -> void:
 	attack_damage = data["attack_damage"]
 	reload = data["reload"]
 	Events.enemy_size_divisor = data["enemy_size_divisor"]
+	texture_rand = data["texture_rand"]
 
 	attack_timer.wait_time = reload
 	_change_health(health, max_health)
+	
+	if texture_rand == 1:
+		sprite_texture.diffuse_texture = diffuse_1
+		sprite_texture.normal_texture = normal_1
+	elif texture_rand == 2:
+		sprite_texture.diffuse_texture = diffuse_2
+		sprite_texture.normal_texture = normal_2
+	else:
+		sprite_texture.diffuse_texture = diffuse_3
+		sprite_texture.normal_texture = normal_3
 
 # obligatory pf 🏳️‍🌈

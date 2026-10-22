@@ -12,7 +12,7 @@ shader = ExtResource("3_3065o")
 shader_parameter/progress = 0.0
 shader_parameter/block_size = 2.0
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_uyv16"]
+[sub_resource type="CanvasTexture" id="CanvasTexture_jsfrk"]
 diffuse_texture = ExtResource("4_3065o")
 normal_texture = ExtResource("5_uyv16")
 
@@ -60,7 +60,7 @@ collision_mask = 3
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=529130266]
 material = SubResource("ShaderMaterial_qlg0r")
 scale = Vector2(4, 4)
-texture = SubResource("CanvasTexture_uyv16")
+texture = SubResource("CanvasTexture_jsfrk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=950839941]
 position = Vector2(-4, -4)
