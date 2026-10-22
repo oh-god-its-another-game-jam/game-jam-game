@@ -6,6 +6,9 @@ var pending_load := false
 func save_game():
 	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	save_nodes.sort_custom(func(a, b):
+		return a.is_in_group("Player") and not b.is_in_group("Player")
+	)
 	for node in save_nodes:
 		# Check the node is an instanced scene so it can be instanced again during load.
 		if node.scene_file_path.is_empty():
@@ -16,7 +19,7 @@ func save_game():
 		if !node.has_method("save"):
 			print("persistent node '%s' is missing a save() function, skipped" % node.name)
 			continue
-
+		
 		# Call the node's save function.
 		var node_data = node.call("save")
 
@@ -52,8 +55,7 @@ func load_game():
 	# the object it represents.
 	var save_file = FileAccess.open("user://savegame.save", FileAccess.READ)
 	pending_load = true
-	
-	while save_file.get_position() < save_file.get_length():
+	while not save_file.eof_reached():
 		var json_string = save_file.get_line()
 
 		# Creates the helper class to interact with JSON.
@@ -76,9 +78,9 @@ func load_game():
 
 		var new_object = load(node_data["filename"]).instantiate()
 		parent.add_child(new_object)
-		if node_data["pos_x"]:
+		if node_data.has("pos_x") and node_data["pos_x"] != null:
 			new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
-
+		
 		# Let the node restore its own state (after add_child so @onready vars exist).
 		if new_object.has_method("load_data"):
 			new_object.load_data(node_data)

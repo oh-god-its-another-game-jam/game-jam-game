@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://ck8blg8s0u5fe"]
 
-[ext_resource type="PackedScene" uid="uid://dlfkmnvkalefo" path="res://scenes/player/player.tscn" id="1_1wklo"]
 [ext_resource type="Script" uid="uid://bcw0gnqla02m3" path="res://scripts/levels/tutorial.gd" id="1_7ac3l"]
 [ext_resource type="PackedScene" uid="uid://duh31nuskww0r" path="res://scenes/player/player_camera.tscn" id="2_7ac3l"]
 [ext_resource type="PackedScene" uid="uid://df56635vv31xq" path="res://scenes/global/sound.tscn" id="3_iig34"]
@@ -17,8 +16,6 @@ size = Vector2(126, 126)
 
 [node name="Tutorial" type="Node2D" unique_id=789564714]
 script = ExtResource("1_7ac3l")
-
-[node name="Player" parent="." unique_id=401100565 instance=ExtResource("1_1wklo")]
 
 [node name="Cell" parent="." unique_id=1873970965 instance=ExtResource("3_uu0hj")]
 position = Vector2(675, 15)
