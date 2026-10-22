@@ -5,13 +5,12 @@ extends Node2D
 @onready var godot_icon = $ExampleIcon1
 
 @onready var player = get_tree().get_first_node_in_group("Player")
-@onready var cell = $Cell
+@onready var cell = preload("res://scenes/cell.tscn")
 @onready var enemy = preload("res://scenes/enemy_stuff/basic_enemy.tscn")
 
 # Godot functions
 
 func _ready() -> void:
-	cell.hide()
 	tutorial()
 
 # User functions
@@ -40,12 +39,16 @@ func tutorial() -> void:
 	await Events.dash_sound
 	await show_line("Well done!\nAttacks cannot hit you when you're dashing", true, 2.0)
 	
+	Events.allowed_actions["toggle_minimap"] = true
 	await show_line("Press M to toggle the minimap", false, 2.0)
 	await Events.minimap_toggle
 	await show_line("Well done!", true, 2.0)
 	
-	cell.show()
 	godot_icon.hide()
+	cell = cell.instantiate()
+	cell.controlled_by = "player"
+	cell.global_position = player.global_position + Vector2(200,0)
+	get_parent().add_child(cell)
 	
 	await show_line("This is a cell. \nThis is what it looks like when you control it",true,2.0)
 	cell.controlled_by = "enemy"
