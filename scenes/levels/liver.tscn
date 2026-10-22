@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dneywvfhqgxru" path="res://artwork/icon.svg" id="1_lhqvl"]
 [ext_resource type="Texture2D" uid="uid://cqtox8afloc81" path="res://artwork/Temp_Assets/21481-liver.jpg" id="2_b4a5i"]
+[ext_resource type="Texture2D" uid="uid://x3ri6oa7548" path="res://artwork/Organs/Liver.png" id="2_fe2il"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yc10j"]
 texture = ExtResource("1_lhqvl")
@@ -52,6 +53,11 @@ visible = false
 position = Vector2(296, 608)
 scale = Vector2(4.25, 4.25)
 texture = ExtResource("2_b4a5i")
+
+[node name="Liver2" type="Sprite2D" parent="." unique_id=7608215]
+position = Vector2(110, 159)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_fe2il")
 
 [node name="Liver" type="TileMapLayer" parent="." unique_id=2059674698]
 position = Vector2(0, -6)

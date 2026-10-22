@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://de0mh75vqwhlq"]
 
 [ext_resource type="Texture2D" uid="uid://dneywvfhqgxru" path="res://artwork/icon.svg" id="1_275ds"]
+[ext_resource type="Texture2D" uid="uid://dkoe78pg6goi4" path="res://artwork/Organs/Kidneys.png" id="2_m7k4a"]
 [ext_resource type="Texture2D" uid="uid://d0es8cfpiork4" path="res://artwork/Temp_Assets/Urinary-Tract-BIG_2064x1895.jpg" id="2_tqp3e"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pm3ni"]
@@ -52,6 +53,11 @@ visible = false
 position = Vector2(-36, 469)
 scale = Vector2(2.7445552, 2.7445552)
 texture = ExtResource("2_tqp3e")
+
+[node name="Kidneys2" type="Sprite2D" parent="." unique_id=1566795953]
+position = Vector2(24, 2)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_m7k4a")
 
 [node name="Kidneys" type="TileMapLayer" parent="." unique_id=968616387]
 position = Vector2(0, -6.000061)

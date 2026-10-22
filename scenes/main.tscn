@@ -28,22 +28,22 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-968, 396, 165, 410, 17
 [node name="Stomach" parent="Organs" unique_id=1091828643 instance=ExtResource("8_jscy8")]
 
 [node name="Intestines" parent="Organs" unique_id=1459454795 instance=ExtResource("10_y6deb")]
-position = Vector2(4847, -290)
+position = Vector2(-448, 2330)
 
 [node name="Kidneys" parent="Organs" unique_id=116522162 instance=ExtResource("12_2wyq8")]
-position = Vector2(8599, 77)
+position = Vector2(-378, 5164)
 
 [node name="Liver" parent="Organs" unique_id=841144382 instance=ExtResource("11_og1vs")]
-position = Vector2(11902, 1)
+position = Vector2(-3794, 3429)
 
 [node name="Lungs" parent="Organs" unique_id=462232862 instance=ExtResource("13_vxglm")]
-position = Vector2(15456, -124)
+position = Vector2(-212, -3481)
 
 [node name="Brain" parent="Organs" unique_id=670454266 instance=ExtResource("14_2f3dj")]
-position = Vector2(19945, -52)
+position = Vector2(-208, -8595)
 
 [node name="Heart" parent="Organs" unique_id=1883973132 instance=ExtResource("9_pm3ni")]
-position = Vector2(23405, -18)
+position = Vector2(-121, -6152)
 
 [node name="Sound" parent="." unique_id=457052338 instance=ExtResource("1_tbgi4")]
 
