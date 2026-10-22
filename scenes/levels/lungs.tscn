@@ -4,9 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dneywvfhqgxru" path="res://artwork/icon.svg" id="1_xdo1a"]
 [ext_resource type="Texture2D" uid="uid://ofoc33irh6uh" path="res://artwork/Temp_Assets/Lungs_diagram_detailed.svg.webp" id="2_bpmg5"]
 [ext_resource type="PackedScene" uid="uid://b5mm4pbq332bq" path="res://scenes/cell.tscn" id="5_ete3j"]
-[ext_resource type="PackedScene" uid="uid://dvpmieqoyucs" path="res://scenes/player/player_character_body_2d.tscn" id="6_e147c"]
 [ext_resource type="PackedScene" uid="uid://cilmvhpq6adfm" path="res://scenes/ui/HUD.tscn" id="6_r6pj7"]
-[ext_resource type="PackedScene" uid="uid://duh31nuskww0r" path="res://scenes/player/player_camera.tscn" id="7_qyotp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_og1vs"]
 texture = ExtResource("1_xdo1a")
@@ -112,9 +110,3 @@ position = Vector2(-14, -552.5)
 
 [node name="Cell14" parent="." unique_id=2049840546 instance=ExtResource("5_ete3j")]
 position = Vector2(469, -588)
-
-[node name="Player" parent="." unique_id=2017533679 instance=ExtResource("6_e147c")]
-position = Vector2(-268, -290)
-
-[node name="PlayerCamera" parent="." unique_id=131873372 instance=ExtResource("7_qyotp")]
-position = Vector2(-1, 1)
