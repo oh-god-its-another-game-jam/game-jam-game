@@ -70,8 +70,7 @@ var idle_target_pos
 # Godot functions
 
 func _ready() -> void:
-	_change_health(health, max_health)
-	
+	Events.boss_health_changed.emit(health, max_health, false)
 
 func _process(delta: float) -> void:
 	if health_regen > 0:
@@ -148,35 +147,6 @@ func _attack_toxin_stream() -> void:
 		toxin.velocity = (vec_to_player + Vector2.RIGHT.rotated(randf_range(-10,10))) * toxin_speed
 	attk_in_progress = false
 
-# Movement:
-#func _navigate_to_point_between(attack_target,compare) -> Vector2:
-	## Nav path to the closest cell
-	#var path: PackedVector2Array = NavigationServer2D.map_get_path(
-		#nav.get_navigation_map(), 
-		#attack_target.global_position, 
-		#compare.global_position, 
-		#true
-	#)
-	#
-	#if path.size() > 1:
-		## Find max point away where still in attack range
-		#var remaining_dist = attack_range
-		#for i in range(path.size() - 1, 0, -1):
-			#path_current = path[i]
-			#path_next = path[i-1]
-			#segment_dist = path_current.distance_to(path_next)
-			#
-			#if segment_dist >= remaining_dist:
-				#return path_current + (path_next - path_current).normalized() * remaining_dist
-			#else:
-				## Have not yet reached the correct distance
-				#remaining_dist -= segment_dist
-		## This code shouldn't ever run, but is needed to prevent error, and would be correct if it did run
-		#return path_next
-	#else:
-		## No path found
-		#return attack_target.global_position + (boss_character.global_position - attack_target.global_position).normalized() * attack_range
-
 func _move_to_position(move_pos:Vector2) -> void:
 	nav.set_target_position(move_pos)
 
@@ -206,8 +176,7 @@ func _on_velocity_computed(safe_velocity: Vector2) -> void:
 
 # Health:
 func _change_health(new: float, max_value: float):
-	health_bar.max_value = max_value
-	health_bar.value = new
+	Events.boss_health_changed.emit(new, max_value, true)
 
 # Attack:
 func _check_attack() -> bool:
@@ -272,15 +241,19 @@ func save() -> Dictionary:
 		"max_health": max_health,
 		"glucose": glucose,
 		"max_glucose": max_glucose,
+		"health_regen": health_regen,
+		"glucose_regen": glucose_regen,
 		"movement_speed": movement_speed,
-		#"attack_damage": attack_damage,
-		"enemy_size_divisor": Events.enemy_size_divisor,
-		#"texture_rand": texture_rand
+		"stream_attack_damage": stream_attack_damage,
+		"spin_attack_damage": spin_attack_damage,
+		"stage": stage,
+		"state": state,
 	}
 
 	return save_dict
 
 func load_data(data: Dictionary) -> void:
+	position = Vector2(data["pos_x"], data["pos_y"])
 	rotation = data["rotation"]
 	scale = Vector2(data["scale_x"], data["scale_y"])
 	boss_character.position = Vector2(data["body_x"], data["body_y"])
@@ -288,22 +261,14 @@ func load_data(data: Dictionary) -> void:
 	max_health = data["max_health"]
 	glucose = data["glucose"]
 	max_glucose = data["max_glucose"]
+	health_regen = data["health_regen"]
+	glucose_regen = data["glucose_regen"]
 	movement_speed = data["movement_speed"]
-	#attack_damage = data["attack_damage"]
-	Events.enemy_size_divisor = data["enemy_size_divisor"]
-	#texture_rand = data["texture_rand"]
+	stream_attack_damage = data["stream_attack_damage"]
+	spin_attack_damage = data["spin_attack_damage"]
+	stage = data["stage"]
+	state = data["state"]
 
-	#attack_switch_timer.wait_time = switch_time
 	_change_health(health, max_health)
-	
-	#if texture_rand == 1:
-		#sprite_texture.diffuse_texture = diffuse_1
-		#sprite_texture.normal_texture = normal_1
-	#elif texture_rand == 2:
-		#sprite_texture.diffuse_texture = diffuse_2
-		#sprite_texture.normal_texture = normal_2
-	#else:
-		#sprite_texture.diffuse_texture = diffuse_3
-		#sprite_texture.normal_texture = normal_3
 
 # obligatory pf 🏳️‍🌈
