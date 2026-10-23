@@ -41,11 +41,13 @@ func save() -> Dictionary:
 		"parent": get_tree().current_scene.get_path_to(get_parent()),
 		"pos_x": null,
 		"health_bar_progression": health_bar.value,
-		"glucose_bar_progression": $GlucoseBottle.percentage
+		"glucose_bar_progression": $GlucoseBottle.percentage,
+		"boss_bar_progression": boss_bar.value,
 	}
 	return save_dict
 
 func load_data(data: Dictionary) -> void:
 	health_bar.value = data["health_bar_progression"]
 	$GlucoseBottle.percentage = data["glucose_bar_progression"]
+	boss_bar.value = data["boss_bar_progression"]
 # obligatory pf 🏳️‍🌈
