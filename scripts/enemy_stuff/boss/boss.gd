@@ -43,8 +43,8 @@ var max_bullet_direction_rotation = 0.1
 enum Stage {stage1, stage2, stage3}
 var stage = Stage.stage1
 
-enum State {idle, spotted, attack, dying}
-var state := State.idle
+enum State {attack, dying}
+var state := State.attack
 
 enum Attack {spawn_enemies, spin_attack, ground_shake, toxin_stream}
 var curr_attack = Attack.spawn_enemies
