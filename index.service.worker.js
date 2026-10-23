@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1792779106|10217585';
+const CACHE_VERSION = '1792781554|10207040';
 /** @type {string} */
 const CACHE_PREFIX = 'Corpus Bellum-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
