@@ -42,7 +42,6 @@ cells=""
 Buttons="Add UI Buttons here"
 Minimap=""
 movable=""
-GoldIndicator=""
 HUD=""
 
 [input]

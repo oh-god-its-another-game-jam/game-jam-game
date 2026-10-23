@@ -46,6 +46,7 @@ func _process(_delta: float) -> void:
 			call(buttons[button_index].name)
 
 func _find_buttons():
+	buttons = []
 	for child in $Buttons.get_children(false):
 		if child.is_in_group("Buttons"):
 			buttons.append(child)
@@ -60,8 +61,8 @@ func _return():
 	visible = false
 	shop_exited.emit()
 
-func _triple_antigens():
-	if player.gold > 50:
+func _triple_antigens() -> void:
+	if player.gold >= 50:
 		$Buttons/_triple_antigens.queue_free()
 		Upgrades.attack_upgrades["triple_antigens"] = true
 		player.gold -= 50
@@ -72,3 +73,44 @@ func _triple_antigens():
 		$Buttons/_triple_antigens.text = "Insufficient Gold"
 		await get_tree().create_timer(2.0).timeout
 		$Buttons/_triple_antigens.text = _t_a_text
+
+func _parry() -> void:
+	if player.gold >= 100:
+		Upgrades.action_upgrades["parry"] = true
+		player.gold -= 100
+		$GoldIndicator.text = "Gold = " + str(player.gold)
+		_find_buttons()
+		Events.allowed_actions["parry"] = true
+		$Buttons/_parry.text = "Press space to parry!"
+		await get_tree().create_timer(2.0).timeout
+		$Buttons/_parry.queue_free()
+	else:
+		var _p_text = $Buttons/_parry.text
+		$Buttons/_parry.text = "Insufficient Gold"
+		await get_tree().create_timer(2.0).timeout
+		$Buttons/_parry.text = _p_text
+		
+func _exploding_enemies() -> void:
+	if player.gold >= 150:
+		$Buttons/_exploding_enemies.queue_free()
+		Upgrades.attack_upgrades["exploding_enemies_on_death"] = true
+		player.gold -= 150
+		$GoldIndicator.text = "Gold = " + str(player.gold)
+		_find_buttons()
+	else:
+		var _e_e_text = $Buttons/_exploding_enemies.text
+		$Buttons/_exploding_enemies.text = "Insufficient Gold"
+		await get_tree().create_timer(2.0).timeout
+		$Buttons/_exploding_enemies.text = _e_e_text
+	
+func _50_glucose() -> void:
+	if player.gold >= 50:
+		Upgrades.call("_50_glucose_regen")
+		player.gold -= 50
+		$GoldIndicator.text = "Gold = " + str(player.gold)
+		_find_buttons()
+	else:
+		var f_g_text = $Buttons/_50_glucose.text
+		$Buttons/_50_glucose.text = "Insufficient Gold"
+		await get_tree().create_timer(2.0).timeout
+		$Buttons/_50_glucose.text = f_g_text

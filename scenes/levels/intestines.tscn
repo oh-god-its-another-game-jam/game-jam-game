@@ -171,18 +171,23 @@ label_settings = SubResource("LabelSettings_htqyc")
 process_mode = 3
 script = ExtResource("6_5mkh6")
 
-[node name="Title" type="Label" parent="Appendix/ShopMenu" unique_id=35409832]
-offset_top = 61.0
+[node name="ColorRect" type="ColorRect" parent="Appendix/ShopMenu" unique_id=1293556823]
 offset_right = 1152.0
-offset_bottom = 204.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.6039216)
+
+[node name="Title" type="Label" parent="Appendix/ShopMenu" unique_id=35409832]
+offset_top = 7.0
+offset_right = 1152.0
+offset_bottom = 150.0
 text = "Shop"
 label_settings = ExtResource("7_ujs6w")
 horizontal_alignment = 1
 
 [node name="Buttons" type="VBoxContainer" parent="Appendix/ShopMenu" unique_id=1569033732]
-offset_top = 229.0
+offset_top = 201.0
 offset_right = 1152.0
-offset_bottom = 474.0
+offset_bottom = 612.0
 
 [node name="_return" type="Label" parent="Appendix/ShopMenu/Buttons" unique_id=1606430346 groups=["Buttons"]]
 layout_mode = 2
@@ -193,6 +198,12 @@ horizontal_alignment = 1
 [node name="_triple_antigens" type="Label" parent="Appendix/ShopMenu/Buttons" unique_id=925928079 groups=["Buttons"]]
 layout_mode = 2
 text = "Triple Antigens: 50 Gold"
+label_settings = ExtResource("8_wsu12")
+horizontal_alignment = 1
+
+[node name="_parry" type="Label" parent="Appendix/ShopMenu/Buttons" unique_id=1414977619 groups=["Buttons"]]
+layout_mode = 2
+text = "Parry: 100 Gold"
 label_settings = ExtResource("8_wsu12")
 horizontal_alignment = 1
 
@@ -209,19 +220,19 @@ label_settings = ExtResource("8_wsu12")
 horizontal_alignment = 1
 
 [node name="SelectedButtonIndicator" type="Label" parent="Appendix/ShopMenu" unique_id=254447310]
-offset_top = 228.0
+offset_top = 204.0
 offset_right = 1152.0
-offset_bottom = 307.0
+offset_bottom = 283.0
 text = ">                                                       <"
 label_settings = SubResource("LabelSettings_lyxsl")
 horizontal_alignment = 1
 
 [node name="GoldIndicator" type="Label" parent="Appendix/ShopMenu" unique_id=355939645]
-offset_left = 782.0
-offset_top = 106.0
-offset_right = 961.0
-offset_bottom = 171.0
+offset_top = 117.0
+offset_right = 1152.0
+offset_bottom = 182.0
 text = "Gold = 0"
 label_settings = SubResource("LabelSettings_ujs6w")
+horizontal_alignment = 1
 
 [connection signal="shop_exited" from="Appendix/ShopMenu" to="Appendix" method="_on_shop_menu_shop_exited"]
