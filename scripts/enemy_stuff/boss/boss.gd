@@ -98,11 +98,13 @@ func _physics_process(delta: float) -> void:
 
 func _check_stage() -> void:
 	if health/max_health < 0.5 and stage == Stage.stage1:
-		_change_health(health*1.5, max_health)
+		health *= 1.5
+		_change_health(health, max_health)
 		allowed_attacks.append(Attack.toxin_stream)
 		stage = Stage.stage2
 	elif health/max_health < 0.3 and stage == Stage.stage2:
-		_change_health(health*1.25, max_health)
+		health *= 1.25
+		_change_health(health, max_health)
 		allowed_attacks.append(Attack.ground_shake)
 		stage = Stage.stage3
 
