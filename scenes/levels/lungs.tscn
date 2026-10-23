@@ -6,11 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://1ku6hx8ycbfl" path="res://artwork/Organs/Lungs/Egophigus.png" id="3_jqnip"]
 [ext_resource type="Texture2D" uid="uid://cp3nowe483va4" path="res://artwork/Organs/Lungs/Lung1.png" id="4_ltqae"]
 [ext_resource type="PackedScene" uid="uid://b5mm4pbq332bq" path="res://scenes/cell.tscn" id="5_ete3j"]
-<<<<<<< Updated upstream
-=======
-[ext_resource type="Texture2D" uid="uid://dttwkoymdrupa" path="res://artwork/Organs/Lungs/Lung2.png" id="5_owkbe"]
-[ext_resource type="PackedScene" uid="uid://dvpmieqoyucs" path="res://scenes/player/player_character_body_2d.tscn" id="6_e147c"]
->>>>>>> Stashed changes
+[ext_resource type="Texture2D" uid="uid://dttwkoymdrupa" path="res://artwork/Organs/Lungs/Lung2.png" id="5_qyotp"]
 [ext_resource type="PackedScene" uid="uid://cilmvhpq6adfm" path="res://scenes/ui/HUD.tscn" id="6_r6pj7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_og1vs"]
@@ -79,10 +75,10 @@ position = Vector2(-43, 179)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("4_ltqae")
 
-[node name="Lung2" type="Sprite2D" parent="." unique_id=457768119]
-position = Vector2(-55, 180)
-scale = Vector2(1.2, 1.2)
-texture = ExtResource("5_owkbe")
+[node name="Lung2" type="Sprite2D" parent="." unique_id=884578186]
+position = Vector2(-3.9999123, 200.49997)
+scale = Vector2(1.1466668, 1.1970422)
+texture = ExtResource("5_qyotp")
 
 [node name="Lungs" type="TileMapLayer" parent="." unique_id=873840854]
 position = Vector2(0, -12)
