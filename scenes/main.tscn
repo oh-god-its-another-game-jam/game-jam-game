@@ -126,7 +126,7 @@ visible = true
 return_node_path = NodePath("../PauseMenu")
 
 [node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
-position = Vector2(-897, 479)
+position = Vector2(3042, 1117)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=544023703]
 color = Color(0.16206557, 0.1620656, 0.16206557, 1)
