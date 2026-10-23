@@ -7,7 +7,11 @@ extends CanvasLayer
 # --- HEALTH AND GLUCOSE ---
 @onready var health_bar: TextureProgressBar = $HealthBar
 
-@onready var boss_bar: TextureProgressBar = $BossBar
+@onready var boss_bar: TextureProgressBar = $Container/BossBar
+@onready var boss_bar_light: TextureProgressBar = $Container/BossBarLight
+
+var max_tween: Tween
+var val_tween: Tween
 
 # Godot functions
 
@@ -15,6 +19,7 @@ func _ready() -> void:
 	character.health_changed.connect(_on_health_change)
 	Events.boss_health_changed.connect(_on_boss_health_change)
 	boss_bar.hide()
+	boss_bar_light.hide()
 
 # User functions
 
@@ -25,8 +30,22 @@ func _on_health_change(new: float, max_value: float) -> void:
 func _on_boss_health_change(new: float, max_value: float, visible: bool = false) -> void:
 	if visible:
 		boss_bar.show()
+		boss_bar_light.show()
 	elif not visible:
 		boss_bar.hide()
+		boss_bar_light.hide()
+	
+	if max_tween and max_tween.is_valid():
+		max_tween.kill()
+	if val_tween and val_tween.is_valid():
+		val_tween.kill()
+	
+	max_tween = get_tree().create_tween()
+	val_tween = get_tree().create_tween()
+	
+	max_tween.tween_property(boss_bar_light, "max_value", max_value, 5.0)
+	val_tween.tween_property(boss_bar_light, "value", new, 5.0)
+	
 	boss_bar.max_value = max_value
 	boss_bar.value = new
 
