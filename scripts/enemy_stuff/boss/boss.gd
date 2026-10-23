@@ -202,7 +202,6 @@ func _attack_switch() -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if state == State.dying:
 		return
-	print("hit")
 	if body.is_in_group("Antigens"):
 		var amount = body.get_meta("attack_damage")
 		health -= amount
@@ -214,10 +213,10 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		
 		_change_health(health,max_health)
 	if health <= 0:
-		Events.enemy_died_sound.emit()
 		_die()
 
 func _die() -> void:
+	print("died")
 	queue_free() # Temporary, add win condition...
 
 func save() -> Dictionary:
