@@ -6,9 +6,6 @@
 [ext_resource type="Script" uid="uid://cn3r6dopw4lyh" path="res://scripts/levels/heartbeat_path.gd" id="2_383bh"]
 [ext_resource type="Texture2D" uid="uid://b6mh10pxw7bel" path="res://artwork/Temp_Assets/21704-heart-inside.jpg" id="2_j1m5b"]
 [ext_resource type="PackedScene" uid="uid://dqsy8cugqtfk1" path="res://scenes/enemy_stuff/boss/boss.tscn" id="4_s7d4v"]
-[ext_resource type="PackedScene" uid="uid://dvpmieqoyucs" path="res://scenes/player/player_character_body_2d.tscn" id="7_5ciii"]
-[ext_resource type="PackedScene" uid="uid://duh31nuskww0r" path="res://scenes/player/player_camera.tscn" id="8_2velq"]
-[ext_resource type="PackedScene" uid="uid://cilmvhpq6adfm" path="res://scenes/ui/HUD.tscn" id="9_4x4nn"]
 
 [sub_resource type="Curve2D" id="Curve2D_mbvle"]
 _data = {
@@ -58,8 +55,6 @@ physics_layer_0/collision_layer = 9
 physics_layer_0/collision_mask = 9
 sources/0 = SubResource("TileSetAtlasSource_muem4")
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_glkys"]
-
 [node name="Heart" type="Node2D" unique_id=1883973132]
 script = ExtResource("1_mbvle")
 
@@ -96,13 +91,3 @@ tile_set = SubResource("TileSet_dp3eg")
 
 [node name="Boss" parent="." unique_id=101596049 instance=ExtResource("4_s7d4v")]
 position = Vector2(343, -370)
-
-[node name="Player" parent="." unique_id=2017533679 instance=ExtResource("7_5ciii")]
-position = Vector2(255, -199)
-
-[node name="PlayerCamera" parent="." unique_id=131873372 instance=ExtResource("8_2velq")]
-
-[node name="HUD" parent="." unique_id=735888115 instance=ExtResource("9_4x4nn")]
-
-[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=738703234]
-navigation_polygon = SubResource("NavigationPolygon_glkys")
