@@ -9,6 +9,7 @@ signal player_shoot
 signal minimap_toggle
 signal notify_send
 signal enemy_resized
+signal boss_health_changed
 @warning_ignore_restore("unused_signal")
 
 var enemy_size_divisor: float = 2.0

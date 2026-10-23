@@ -13,6 +13,7 @@ extends CanvasLayer
 
 func _ready() -> void:
 	character.health_changed.connect(_on_health_change)
+	Events.boss_health_changed.connect(_on_boss_health_change)
 	boss_bar.hide()
 
 # User functions
