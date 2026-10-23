@@ -61,8 +61,8 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_muem4")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_glkys"]
-vertices = PackedVector2Array(-787.78906, 2120.0469, -1660.9766, 1901, -3116.8438, 1249.9922, -3285.461, 511.9922, -1758.1328, 32, 299.28906, 32, 643.2031, 511.3203, 43.28125, 2199.6172, -3076.6172, 1722.2969)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7), PackedInt32Array(1, 8, 2)])
+vertices = PackedVector2Array(1993.1563, -814.8906, 838.8828, -654.46094, -1488.25, -985.59375, -1515.3125, -2564.6563, 635.9531, -2548.3438, 2371.7734, -1337.4688, 76.89844, -277.95313, -1745.2188, 27.9375, -787.78906, 2120.039, -1660.9922, 1901.0078, -3116.8438, 1249.9922, -3285.461, 511.9922, 643.1875, 511.3203, 43.28125, 2199.6172, -3076.6172, 1722.2969)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(2, 1, 6, 7), PackedInt32Array(8, 9, 10, 11, 7, 6, 12, 13), PackedInt32Array(9, 14, 10)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1666.9026, 1932.5128, -793.2885, 2151.6672, 65.081314, 2233.85, 678.9565, 506.27463, 124.88579, -265.9676, 848.40247, -623.4807, 2011.0715, -785.0725, 2416.8037, -1345.0955, 646.1227, -2580.2668, -1547.88, -2596.9116, -1520.3231, -989.31616, -1771.8535, 2.774109, -3323.2515, 490.32352, -3148.5288, 1254.937, -3106.3137, 1750.8087)])
 parsed_collision_mask = 4294967041
 agent_radius = 32.0
@@ -217,4 +217,4 @@ shape = SubResource("CapsuleShape2D_glkys")
 
 [node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
 z_index = 1
-position = Vector2(-689, 523)
+position = Vector2(-131, -4485)

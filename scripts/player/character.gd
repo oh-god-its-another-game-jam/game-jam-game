@@ -44,7 +44,7 @@ var antigen_cooldown_time = 0.2
 var parrying = false
 
 var frame_passed = false
-var gold: int = 500
+var gold: int = 0
 
 var in_heart_stream: bool = false
 
