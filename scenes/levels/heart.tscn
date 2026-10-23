@@ -60,7 +60,6 @@ scale = Vector2(5.3378134, 5.3378134)
 texture = ExtResource("2_j1m5b")
 
 [node name="Heart2" type="Sprite2D" parent="." unique_id=1210256334]
-visible = false
 z_index = -1
 position = Vector2(-72, -77)
 scale = Vector2(1.2, 1.2)
@@ -76,7 +75,6 @@ position = Vector2(343, -370)
 metadata/max_health = 100.0
 
 [node name="BeatPath" type="Path2D" parent="." unique_id=1285262696 groups=["heart_stream_follower"]]
-visible = false
 z_index = 3
 position = Vector2(1616.7904, -8)
 scale = Vector2(2.903169, 1)
