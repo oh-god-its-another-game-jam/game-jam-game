@@ -76,6 +76,7 @@ tile_set = SubResource("TileSet_dp3eg")
 
 [node name="Boss" parent="." unique_id=101596049 instance=ExtResource("4_s7d4v")]
 position = Vector2(343, -370)
+metadata/max_health = 100.0
 
 [node name="Player" parent="." unique_id=2017533679 instance=ExtResource("7_2velq")]
 position = Vector2(64, -104)
@@ -92,8 +93,3 @@ position = Vector2(1616.7904, -8)
 scale = Vector2(2.903169, 1)
 curve = ExtResource("10_4x4nn")
 script = ExtResource("2_383bh")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="BeatPath" unique_id=792553562]
-position = Vector2(-731.1977, -302)
-rotation = -0.17425464
-scale = Vector2(0.3444512, 1)
