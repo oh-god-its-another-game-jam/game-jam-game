@@ -27,6 +27,8 @@ func _check() -> void:
 					Events.level = Events.Levels.kidneys
 				"Appendix":
 					Events.level = Events.Levels.appendix
+				"Other":
+					Events.level = Events.Levels.other
 				"Heart":
 					if is_instance_valid(boss):
 						boss.heart_activated = true
