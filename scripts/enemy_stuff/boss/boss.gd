@@ -197,7 +197,7 @@ func _attack_switch() -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if state == State.dying:
 		return
-
+	print("hit")
 	if body.is_in_group("Antigens"):
 		var amount = body.get_meta("attack_damage")
 		health -= amount
