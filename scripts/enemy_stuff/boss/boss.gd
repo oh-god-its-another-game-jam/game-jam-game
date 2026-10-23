@@ -83,7 +83,7 @@ func _process(delta: float) -> void:
 	if glucose_regen > 0:
 		glucose = clamp(glucose + glucose_regen * delta, -max_glucose, max_glucose)
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	_check_stage()
 	vec_to_player = player_character.global_position - global_position
 	if Events.level != Events.Levels.heart:
