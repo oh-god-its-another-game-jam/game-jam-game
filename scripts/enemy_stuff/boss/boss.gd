@@ -86,7 +86,8 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	_check_stage()
 	vec_to_player = player_character.global_position - global_position
-	
+	if Events.level != Events.Levels.heart:
+		attk_in_progress = true
 	if not attk_in_progress:
 		_attack_switch()
 		if curr_attack == Attack.spawn_enemies:
