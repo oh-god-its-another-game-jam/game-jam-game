@@ -10,6 +10,7 @@
 [ext_resource type="LabelSettings" uid="uid://dxfmedwso2atk" path="res://scenes/ui/menu_primary.tres" id="7_ujs6w"]
 [ext_resource type="LabelSettings" uid="uid://b0flm8u3mgn6h" path="res://scenes/ui/menu_secondary.tres" id="8_wsu12"]
 [ext_resource type="FontFile" uid="uid://clm4igkhbs182" path="res://artwork/Fonts/Body/PT Sans/PTSans-BoldItalic.ttf" id="9_r6230"]
+[ext_resource type="PackedScene" uid="uid://b5mm4pbq332bq" path="res://scenes/cell.tscn" id="11_r6230"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0ld40"]
 texture = ExtResource("1_q3hrh")
@@ -245,5 +246,14 @@ offset_bottom = 182.0
 text = "Gold = 0"
 label_settings = SubResource("LabelSettings_ujs6w")
 horizontal_alignment = 1
+
+[node name="Cell" parent="." unique_id=1873970965 instance=ExtResource("11_r6230")]
+position = Vector2(8, -680)
+
+[node name="Cell2" parent="." unique_id=384431623 instance=ExtResource("11_r6230")]
+position = Vector2(-1232, 434)
+
+[node name="Cell3" parent="." unique_id=1792848717 instance=ExtResource("11_r6230")]
+position = Vector2(772, 1339)
 
 [connection signal="shop_exited" from="Appendix/ShopMenu" to="Appendix" method="_on_shop_menu_shop_exited"]
