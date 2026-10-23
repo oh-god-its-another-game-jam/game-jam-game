@@ -101,12 +101,14 @@ offset_left = 453.0
 offset_right = 933.0
 offset_bottom = 96.0
 
+[node name="BossBarLight" type="TextureProgressBar" parent="Control" unique_id=100213931]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 16.0
+texture_progress = ExtResource("11_p4k5r")
+
 [node name="BossBar" type="TextureProgressBar" parent="Control" unique_id=41840727]
 layout_mode = 0
 value = 50.0
 texture_over = ExtResource("9_euikm")
 texture_progress = ExtResource("10_p4k5r")
-
-[node name="BossBarLight" type="TextureProgressBar" parent="Control" unique_id=100213931]
-layout_mode = 0
-texture_progress = ExtResource("11_p4k5r")

@@ -48,7 +48,7 @@ var state := State.attack
 
 enum Attack {spawn_enemies, spin_attack, ground_shake, toxin_stream}
 var curr_attack = Attack.spawn_enemies
-var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spawn_enemies]
+var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack]
 
 var attk_in_progress := false
 
@@ -79,7 +79,7 @@ func _process(delta: float) -> void:
 		glucose = clamp(glucose + glucose_regen * delta, -max_glucose, max_glucose)
 	
 func _physics_process(delta: float) -> void:
-	
+	_check_stage()
 	vec_to_player = player_character.global_position - global_position
 	
 	if not attk_in_progress:
@@ -114,8 +114,8 @@ func _attack_spawn_enemies() -> void:
 		add_child(enemy)
 		enemy.global_position = mouth.global_position
 		enemy.shot_by_boss = true
-		enemy.boss_set_vec = vec_to_player
-		enemy.boss_set_speed = 100.0
+		enemy.boss_set_vec = vec_to_player.normalized()
+		enemy.boss_set_speed = 200
 	attk_in_progress = false
 
 func _attack_spin() -> void:
