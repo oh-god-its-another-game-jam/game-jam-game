@@ -35,15 +35,14 @@ func _ready() -> void:
 	Events.player_take_damage.connect(play_sound.bind(player_SFX, take_damage_sound, take_damage_meme_sound))
 	Events.soundtrack_request.connect(s_req)
 	switch_track(music1, music2, garbage_wastes)
+	print("music: ", Events.music_volume, " sfx: ", Events.sfx_volume, " master: ", Events.master_volume)
 
 func _process(_delta: float) -> void:
-	if music1.volume_linear != Events.music_volume * (Events.master_volume/100):
-		music1.volume_linear = Events.music_volume * (Events.master_volume/100)
-		music2.volume_linear = Events.music_volume * (Events.master_volume/100)
-	if music1.volume_linear != Events.music_volume * (Events.master_volume/100):
-		music1.volume_linear = Events.music_volume * (Events.master_volume/100)
-		music2.volume_linear = Events.music_volume * (Events.master_volume/100)
-
+	var vol := _get_music_volume()
+	if not is_equal_approx(music1.volume_linear, vol):
+		music1.volume_linear = vol
+		music2.volume_linear = vol
+	
 	if not music2.playing:
 		return
 	var bpm: float = timing.get(music2.stream.resource_path, 120)
@@ -57,6 +56,9 @@ func _process(_delta: float) -> void:
 		beat.emit(beat_no)
 # User functions
 
+func _get_music_volume() -> float:
+	return clampf((Events.music_volume / 100.0) * (Events.master_volume / 100.0), 0.0, 1.0)
+
 func s_req(sound:NodePath):
 	var sound_obj = load(sound)
 	switch_track(music1, music2, sound_obj)
@@ -67,7 +69,7 @@ func play_sound(player: AudioStreamPlayer, sound: AudioStream, meme_SFX = null) 
 	if Events.meme_SFX and meme_SFX != null:
 		player.stream = meme_SFX
 	else:
-		player.volume_linear = Events.sfx_volume * (Events.master_volume/100)
+		player.volume_linear = clampf((Events.sfx_volume / 100.0) * (Events.master_volume / 100.0), 0.0, 1.0)
 		player.stream = sound
 	player.play()
 
