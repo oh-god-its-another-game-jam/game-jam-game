@@ -98,6 +98,11 @@ scale = Vector2(2.903169, 1)
 curve = ExtResource("10_4x4nn")
 script = ExtResource("2_383bh")
 
+[node name="PathFollow2D" type="PathFollow2D" parent="BeatPath" unique_id=792553562]
+position = Vector2(-374.34625, -355)
+rotation = 1.4680256
+scale = Vector2(0.3444512, 1)
+
 [node name="BeatArea" type="Area2D" parent="BeatPath" unique_id=575841647]
 position = Vector2(-556.561, 0)
 scale = Vector2(0.3444512, 1)
