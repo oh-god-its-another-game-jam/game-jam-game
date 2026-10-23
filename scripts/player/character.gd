@@ -291,7 +291,7 @@ func save() -> Dictionary:
 		"sfx_volume": Events.sfx_volume,
 		"meme_SFX": Events.meme_SFX,
 		"triple_antigens": Upgrades.attack_upgrades["triple_antigens"],
-		"exploding_enemies": Upgrades.attack_upgrades["exploding_enemies"],
+		"exploding_enemies": Upgrades.attack_upgrades["exploding_enemies_on_death"],
 		"parry": Upgrades.action_upgrades["parry"]
 	}
 
