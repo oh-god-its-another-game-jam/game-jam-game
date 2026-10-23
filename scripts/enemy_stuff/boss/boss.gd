@@ -3,7 +3,7 @@ extends Node2D
 var antigen_scene = preload("res://scenes/player/antigen.tscn")
 var damage_number_scene = preload("res://scenes/ui/damage_num.tscn")
 var basic_enemy_scene = preload("res://scenes/enemy_stuff/basic_enemy.tscn")
-@onready var mouth = $Mouth
+@onready var mouth = $CharacterBody2D/Mouth
 
 @onready var boss_character = $CharacterBody2D
 
@@ -65,8 +65,6 @@ var segment_dist
 var idle_target_pos
 
 
-# health bar
-@onready var health_bar: ProgressBar = $CharacterBody2D/HealthBar
 
 # Godot functions
 
@@ -133,7 +131,7 @@ func _attack_spin() -> void:
 		toxin.global_position = boss_character.global_position
 		rand = randf_range(-max_bullet_direction_rotation,max_bullet_direction_rotation)
 		toxin.velocity = Vector2.RIGHT.rotated(ang) * toxin_speed
-		ang += 360/intervals
+		ang += 360.0/intervals
 	attk_in_progress = false
 
 func _attack_ground_shake() -> void:
@@ -148,7 +146,7 @@ func _attack_toxin_stream() -> void:
 	attk_in_progress = true
 	var bullets: int = 50
 	for x in range(bullets):
-		await get_tree().create_timer(5/bullets).timeout
+		await get_tree().create_timer(5.0/bullets).timeout
 		var toxin = toxin_scene.instantiate()
 		toxin.set_meta("attack_damage",stream_attack_damage + randi_range(-stream_attack_damage/5,stream_attack_damage/5))
 		get_parent().add_child(toxin)
