@@ -65,6 +65,10 @@ vertices = PackedVector2Array(2005.4609, -794.3828, 845.4297, -633.15625, -1510.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(2, 1, 6, 7), PackedInt32Array(8, 9, 10, 11, 7, 6, 12, 13), PackedInt32Array(9, 14, 10)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1666.9026, 1932.5128, -793.2885, 2151.6672, 65.081314, 2233.85, 678.9565, 506.27463, 124.88579, -265.9676, 848.40247, -623.4807, 2011.0715, -785.0725, 2416.8037, -1345.0955, 646.1227, -2580.2668, -1547.88, -2596.9116, -1520.3231, -989.31616, -1771.8535, 2.774109, -3323.2515, 490.32352, -3148.5288, 1254.937, -3106.3137, 1750.8087)])
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yx0xg"]
+radius = 473.0
+height = 1323.2085
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jpry"]
 size = Vector2(3465, 2359)
 
@@ -90,10 +94,6 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="Main" type="Node2D" unique_id=577279995]
-
-[node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
-z_index = 1
-position = Vector2(1834, -4741)
 
 [node name="Organs" type="Node" parent="." unique_id=687573164]
 
@@ -172,6 +172,13 @@ color = Color(0.16206557, 0.1620656, 0.16206557, 1)
 [node name="Locations" type="Node2D" parent="." unique_id=80261756 groups=["Persist"]]
 script = ExtResource("1_muem4")
 
+[node name="Other" type="Area2D" parent="Locations" unique_id=190545028]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Other" unique_id=1461034225]
+position = Vector2(1609.9995, -5016)
+rotation = 2.6214845
+shape = SubResource("CapsuleShape2D_yx0xg")
+
 [node name="Brain" type="Area2D" parent="Locations" unique_id=2085458914]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Brain" unique_id=65652842]
@@ -218,3 +225,7 @@ shape = SubResource("CapsuleShape2D_glkys")
 position = Vector2(1392, -4725)
 scale = Vector2(50, 50)
 texture = SubResource("GradientTexture2D_muem4")
+
+[node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
+z_index = 1
+position = Vector2(-689, 523)

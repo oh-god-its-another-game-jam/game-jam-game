@@ -14,7 +14,7 @@ signal screen_ripple(origin: Vector2)
 signal soundtrack_request(sound: NodePath)
 @warning_ignore_restore("unused_signal")
 
-enum Levels {brain, heart, intestines, kidneys, liver, lungs, stomach, appendix, tutorial_lvl}
+enum Levels {brain, heart, intestines, kidneys, liver, lungs, stomach, appendix, tutorial_lvl, other}
 var level = Levels.appendix
 
 
