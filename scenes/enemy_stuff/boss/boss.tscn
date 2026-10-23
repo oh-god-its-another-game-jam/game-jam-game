@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dqsy8cugqtfk1"]
 
 [ext_resource type="Script" uid="uid://qga0burrlqo7" path="res://scripts/enemy_stuff/enemy_nav_agent.gd" id="1_hwjcl"]
+[ext_resource type="Script" uid="uid://b76bcts4sltmn" path="res://scripts/enemy_stuff/boss/boss.gd" id="1_j8cug"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yx0xg"]
 radius = 36.05551
@@ -13,8 +14,11 @@ cull_mode = 2
 polygon = PackedVector2Array(36, 0, 33.26, 13.78, 25.46, 25.46, 13.78, 33.26, 0, 36, -13.78, 33.26, -25.46, 25.46, -33.26, 13.78, -36, 0, -33.26, -13.78, -25.46, -25.46, -13.78, -33.26, 0, -36, 13.78, -33.26, 25.46, -25.46, 33.26, -13.78)
 
 [node name="Boss" type="Node2D" unique_id=101596049]
+script = ExtResource("1_j8cug")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1906819446]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=421746252]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D" unique_id=965680044]
 script = ExtResource("1_hwjcl")
