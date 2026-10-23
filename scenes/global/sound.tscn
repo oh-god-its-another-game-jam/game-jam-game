@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b10kdcq0qkger" path="res://scripts/global/sound.gd" id="1_ii1ul"]
 
-[node name="Sound" type="Node2D" unique_id=457052338]
+[node name="Sound" type="Node2D" unique_id=457052338 groups=["sound"]]
 script = ExtResource("1_ii1ul")
 
 [node name="enemy_SFX" type="AudioStreamPlayer" parent="." unique_id=2043081903]

@@ -14,6 +14,7 @@ var shot_by_boss := false:
 		shot_by_boss = value
 		if value:
 			wait_time_timer.start()
+			wait_time_timer.timeout.connect(_off_wait_timer)
 var boss_set_vec: Vector2
 var boss_set_speed: float
 
@@ -81,7 +82,7 @@ var texture_rand = randi_range(1,3)
 
 func _ready() -> void:
 	wait_time_timer = Timer.new()
-	wait_time_timer.wait_time = 2
+	wait_time_timer.wait_time = 1
 	wait_time_timer.one_shot = true
 	add_child(wait_time_timer)
 	
@@ -138,7 +139,7 @@ func _process(delta: float) -> void:
 	
 func _physics_process(delta: float) -> void:
 	if not wait_time_timer.is_stopped():
-		
+		attack_timer.paused = true
 		global_position += boss_set_vec * boss_set_speed * delta
 		return
 	target = _get_target()
@@ -159,6 +160,9 @@ func _physics_process(delta: float) -> void:
 	character.move_and_slide()
 
 # --- USER FUNCTIONS ---
+func _off_wait_timer():
+	shot_by_boss = false
+
 # Movement:
 func _navigate_to_point_between(attack_target,compare) -> Vector2:
 	# Nav path to the closest cell
@@ -290,9 +294,11 @@ func _get_closest_cell() -> Node2D:
 
 func _random_cell_position() -> Vector2:
 	var all_cells = get_tree().get_nodes_in_group("cells")
-	var target_cell = all_cells[randi_range(0,len(all_cells) - 1)]
-	
-	return target_cell.position
+	if len(all_cells) != 0:
+		var target_cell = all_cells[randi_range(0,len(all_cells) - 1)]
+		return target_cell.position
+	else:
+		return Vector2(0,0) # should never happen
 
 # Health:
 func _change_health(new: float, max_value: float):
@@ -318,6 +324,8 @@ func _check_attack() -> bool:
 		raycast.get_collider().is_in_group("cells"))
 
 func _attack() -> void:
+	if target == null:
+		return
 	var toxin = toxin_scene.instantiate()
 	toxin.set_meta("attack_damage",attack_damage + randi_range(-attack_damage/5,attack_damage/5))
 	get_parent().add_child(toxin)

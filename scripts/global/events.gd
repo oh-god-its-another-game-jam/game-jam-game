@@ -11,6 +11,7 @@ signal notify_send
 signal enemy_resized
 signal boss_health_changed
 signal screen_ripple(origin: Vector2)
+signal soundtrack_request(sound: NodePath)
 @warning_ignore_restore("unused_signal")
 
 var enemy_size_divisor: float = 2.0

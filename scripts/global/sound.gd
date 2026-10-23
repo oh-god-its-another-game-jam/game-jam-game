@@ -17,6 +17,15 @@ var garbage_wastes = preload("res://sounds/Garbage_Worms.mp3")
 @onready var music1: AudioStreamPlayer = $music1
 @onready var music2: AudioStreamPlayer = $music2
 
+var timing := {
+	"res://sounds/Garbage_Worms.mp3": 160,
+	"res://sounds/Tenebre_Rosso_Sangue.mp3": 176
+}
+
+
+signal beat(num: int)
+var beat_position := 0.0
+var last_beat := -1
 # Godot functions
 
 func _ready() -> void:
@@ -24,14 +33,35 @@ func _ready() -> void:
 	Events.enemy_died_sound.connect(play_sound.bind(enemy_SFX, enemy_die_sound))
 	Events.dash_sound.connect(play_sound.bind(player_SFX, dash_sound))
 	Events.player_take_damage.connect(play_sound.bind(player_SFX, take_damage_sound, take_damage_meme_sound))
+	Events.soundtrack_request.connect(s_req)
 	switch_track(music1, music2, garbage_wastes)
 
 func _process(_delta: float) -> void:
 	if music1.volume_linear != Events.music_volume * (Events.master_volume/100):
 		music1.volume_linear = Events.music_volume * (Events.master_volume/100)
 		music2.volume_linear = Events.music_volume * (Events.master_volume/100)
-	
+	if music1.volume_linear != Events.music_volume * (Events.master_volume/100):
+		music1.volume_linear = Events.music_volume * (Events.master_volume/100)
+		music2.volume_linear = Events.music_volume * (Events.master_volume/100)
+
+	if not music2.playing:
+		return
+	var bpm: float = timing.get(music2.stream.resource_path, 120)
+	var t := music2.get_playback_position() \
+		+ AudioServer.get_time_since_last_mix() \
+		- AudioServer.get_output_latency()
+	beat_position = t * bpm / 60.0
+	var beat_no := floori(beat_position)
+	if beat_no != last_beat:
+		last_beat = beat_no
+		beat.emit(beat_no)
 # User functions
+
+func s_req(sound:NodePath):
+	var sound_obj = load(sound)
+	switch_track(music1, music2, sound_obj)
+
+
 func play_sound(player: AudioStreamPlayer, sound: AudioStream, meme_SFX = null) -> void:
 	player.stop()
 	if Events.meme_SFX and meme_SFX != null:

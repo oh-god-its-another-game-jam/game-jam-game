@@ -127,6 +127,7 @@ scale = Vector2(1.7025, 1.7025001)
 texture = ExtResource("2_u3r0l")
 
 [node name="Intestines2" type="Sprite2D" parent="." unique_id=2001439039]
+z_index = -1
 position = Vector2(-320, 596)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_0a6ad")
