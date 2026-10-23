@@ -1,7 +1,7 @@
 extends Node2D
 
-@onready var player = $Player
-@onready var locations = $Locations
+@onready var player = $"../Player"
+
 
 var check_timer: Timer
 
@@ -14,7 +14,7 @@ func _ready() -> void:
 	add_child(check_timer)
 
 func _check() -> void:
-	for area in locations.get_children():
+	for area in get_children():
 		if area is Area2D and area.overlaps_body(player):
 			match area.name:
 				"Brain":
