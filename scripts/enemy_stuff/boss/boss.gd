@@ -102,6 +102,7 @@ func _physics_process(_delta: float) -> void:
 	if heart_activated and not done:
 		done = true
 		attk_in_progress = false
+		Events.soundtrack_request.emit("res://sounds/Tenebre_Rosso_Sangue.mp3")
 	elif not heart_activated:
 		attk_in_progress = true
 	
