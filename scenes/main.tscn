@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://df56635vv31xq" path="res://scenes/global/sound.tscn" id="1_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://cilmvhpq6adfm" path="res://scenes/ui/HUD.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dmrjqd12j74cf" path="res://scenes/ui/minimap.tscn" id="7_85g3d"]
+[ext_resource type="Texture2D" uid="uid://b4j34ebgfb3yj" path="res://artwork/Organs/BloodStream.png" id="8_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://dab6o1ajkfy18" path="res://scenes/levels/stomach.tscn" id="8_jscy8"]
 [ext_resource type="PackedScene" uid="uid://gcte2ddwg4al" path="res://scenes/levels/heart.tscn" id="9_pm3ni"]
 [ext_resource type="PackedScene" uid="uid://cufllo5wkhawn" path="res://scenes/levels/intestines.tscn" id="10_y6deb"]
@@ -15,6 +16,61 @@
 [ext_resource type="PackedScene" uid="uid://t15vxhdcr3uf" path="res://scenes/levels/brain.tscn" id="14_2f3dj"]
 [ext_resource type="PackedScene" uid="uid://baxuyhnqidfqg" path="res://scenes/ui/pause_menu.tscn" id="14_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://dveyeae21syku" path="res://scenes/ui/options_menu.tscn" id="15_jbj1t"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_muem4"]
+texture = ExtResource("8_jbj1t")
+texture_region_size = Vector2i(25, 25)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+2:2/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_5ysvq"]
+sources/0 = SubResource("TileSetAtlasSource_muem4")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_glkys"]
 vertices = PackedVector2Array(166.79688, -208.02344, 155.17969, 399.8672, -958.1094, 386.1172, -964.8828, -210.96875)
@@ -28,22 +84,25 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-968, 396, 165, 410, 17
 [node name="Stomach" parent="Organs" unique_id=1091828643 instance=ExtResource("8_jscy8")]
 
 [node name="Intestines" parent="Organs" unique_id=1459454795 instance=ExtResource("10_y6deb")]
-position = Vector2(4847, -290)
+position = Vector2(-448, 2330)
 
 [node name="Kidneys" parent="Organs" unique_id=116522162 instance=ExtResource("12_2wyq8")]
-position = Vector2(8599, 77)
+position = Vector2(-378, 5164)
 
 [node name="Liver" parent="Organs" unique_id=841144382 instance=ExtResource("11_og1vs")]
-position = Vector2(11902, 1)
+position = Vector2(-3794, 3429)
 
 [node name="Lungs" parent="Organs" unique_id=462232862 instance=ExtResource("13_vxglm")]
-position = Vector2(15456, -124)
+position = Vector2(-212, -3481)
 
 [node name="Brain" parent="Organs" unique_id=670454266 instance=ExtResource("14_2f3dj")]
-position = Vector2(19945, -52)
+position = Vector2(-208, -8595)
 
 [node name="Heart" parent="Organs" unique_id=1883973132 instance=ExtResource("9_pm3ni")]
-position = Vector2(23405, -18)
+position = Vector2(-121, -6152)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Organs" unique_id=162855192]
+tile_set = SubResource("TileSet_5ysvq")
 
 [node name="Sound" parent="." unique_id=457052338 instance=ExtResource("1_tbgi4")]
 

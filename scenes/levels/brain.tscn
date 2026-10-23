@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dneywvfhqgxru" path="res://artwork/icon.svg" id="1_q5og4"]
 [ext_resource type="Texture2D" uid="uid://deq00ga8jh0q7" path="res://artwork/Temp_Assets/brain-lateral.png" id="2_5sr82"]
+[ext_resource type="Texture2D" uid="uid://q2t0j7guit2k" path="res://artwork/Organs/Brain.png" id="2_n44wt"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tipki"]
 texture = ExtResource("1_q5og4")
@@ -52,6 +53,11 @@ visible = false
 position = Vector2(-69.024284, 94.49998)
 scale = Vector2(3.3615494, 3.3615499)
 texture = ExtResource("2_5sr82")
+
+[node name="Brain2" type="Sprite2D" parent="." unique_id=713567824]
+position = Vector2(-89, 82)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_n44wt")
 
 [node name="Brain" type="TileMapLayer" parent="." unique_id=1598045905]
 position = Vector2(0, -24)

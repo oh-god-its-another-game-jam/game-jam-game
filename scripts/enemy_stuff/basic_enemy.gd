@@ -7,6 +7,16 @@ var damage_number_scene = preload("res://scenes/ui/damage_num.tscn")
 
 @onready var character = $CharacterBody2D
 
+
+var wait_time_timer: Timer
+var shot_by_boss := false:
+	set(value): # I didnt know u could do this
+		shot_by_boss = value
+		if value:
+			wait_time_timer.start()
+var boss_set_vec: Vector2
+var boss_set_speed: float
+
 # --- VARIABLES ---
 const time_to_resize = 0.5
 
@@ -70,6 +80,11 @@ var texture_rand = randi_range(1,3)
 # Godot functions
 
 func _ready() -> void:
+	wait_time_timer = Timer.new()
+	wait_time_timer.wait_time = 2
+	wait_time_timer.one_shot = true
+	add_child(wait_time_timer)
+	
 	if sprite_texture:
 		sprite.texture = sprite_texture.duplicate()
 		sprite_texture = sprite.texture
@@ -103,6 +118,8 @@ func _process(delta: float) -> void:
 	if not is_instance_valid(hud):
 		hud = get_tree().get_first_node_in_group("HUD")
 		
+	if not wait_time_timer.is_stopped():
+		return
 	var tween = get_tree().create_tween()
 	tween.tween_property(
 		self,
@@ -120,6 +137,10 @@ func _process(delta: float) -> void:
 		glucose = clamp(glucose + glucose_regen * delta, -max_glucose, max_glucose)
 	
 func _physics_process(delta: float) -> void:
+	if not wait_time_timer.is_stopped():
+		
+		global_position += boss_set_vec * boss_set_speed * delta
+		return
 	target = _get_target()
 
 	state = _check_state()

@@ -48,7 +48,7 @@ physics_layer_0/collision_layer = 9
 physics_layer_0/collision_mask = 9
 sources/0 = SubResource("TileSetAtlasSource_jkv2x")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sp4ka"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a4lp4"]
 resource_local_to_scene = true
 shader = ExtResource("3_tpdgv")
 shader_parameter/progress = 0.0
@@ -85,7 +85,7 @@ position = Vector2(-611, 465)
 controlled_by = "player"
 
 [node name="Sprite2D" parent="Cell5" index="0" unique_id=310833080]
-material = SubResource("ShaderMaterial_sp4ka")
+material = SubResource("ShaderMaterial_a4lp4")
 
 [node name="PointLight2D" parent="Cell5/Sprite2D" index="1" unique_id=1752685726]
 color = Color(0.10980392, 0.93333334, 0.14117648, 1)
