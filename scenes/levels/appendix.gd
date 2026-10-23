@@ -27,3 +27,18 @@ func _process(_delta: float) -> void:
 
 func _on_shop_menu_shop_exited() -> void:
 	player.velocity += push_force * initial_dir
+
+func save() -> Dictionary:
+	var save_dict = {
+		"filename": get_scene_file_path(),
+		"parent": get_tree().current_scene.get_path_to(get_parent()),
+		"initial_dir_x": initial_dir.x,
+		"initial_dir_y": initial_dir.y,
+		"shop_visible": shop_menu.visible
+	}
+
+	return save_dict
+
+func load_data(data: Dictionary) -> void:
+	initial_dir = Vector2(data["initial_dir_x"], data["initial_dir_y"])
+	shop_menu.visible = data["shop_visible"]

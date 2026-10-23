@@ -11,7 +11,12 @@ signal notify_send
 signal enemy_resized
 signal boss_health_changed
 signal screen_ripple(origin: Vector2)
+signal soundtrack_request(sound: NodePath)
 @warning_ignore_restore("unused_signal")
+
+enum Levels {brain, heart, intestines, kidneys, liver, lungs, stomach, appendix, tutorial_lvl}
+var level = Levels.appendix
+
 
 var enemy_size_divisor: float = 2.0
 var enemy_max_scale: float = 1 # 2x starting size

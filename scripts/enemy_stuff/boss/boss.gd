@@ -3,9 +3,13 @@ extends Node2D
 var antigen_scene = preload("res://scenes/player/antigen.tscn")
 var damage_number_scene = preload("res://scenes/ui/damage_num.tscn")
 var basic_enemy_scene = preload("res://scenes/enemy_stuff/basic_enemy.tscn")
-@onready var mouth = $Mouth
+@onready var mouth = $CharacterBody2D/Mouth
 
 @onready var boss_character = $CharacterBody2D
+
+@onready var hitbox = $CharacterBody2D/Hitbox
+
+
 
 # --- VARIABLES ---
 var rand: float
@@ -32,7 +36,14 @@ var movement_delta: float
 @onready var spin_attack_damage = get_meta("spin_attack_damage")
 
 # target the player
-@onready var player_character = get_tree().get_first_node_in_group("Player")
+@onready var player_character: Node2D = _get_player()
+
+func _get_player() -> Node2D:
+	if not is_instance_valid(player_character) or player_character.is_queued_for_deletion():
+		player_character = get_tree().get_first_node_in_group("Player")
+		if player_character and player_character.is_queued_for_deletion():
+			player_character = null
+	return player_character
 
 @onready var vec_to_player: Vector2
 
@@ -40,14 +51,15 @@ var target_pos
 var max_bullet_direction_rotation = 0.1
 
 # state
-enum Stage {stage1}
+enum Stage {stage1, stage2, stage3}
 var stage = Stage.stage1
 
-enum State {idle, spotted, attack, dying}
-var state := State.idle
+enum State {attack, dying}
+var state := State.attack
 
 enum Attack {spawn_enemies, spin_attack, ground_shake, toxin_stream}
 var curr_attack = Attack.spawn_enemies
+var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack] #var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack, Attack.ground_shake, Attack.toxin_stream]
 
 var attk_in_progress := false
 
@@ -64,14 +76,12 @@ var segment_dist
 var idle_target_pos
 
 
-# health bar
-@onready var health_bar: ProgressBar = $CharacterBody2D/HealthBar
 
 # Godot functions
 
 func _ready() -> void:
-	_change_health(health, max_health)
-	
+	hitbox.body_entered.connect(_on_hitbox_body_entered)
+	Events.boss_health_changed.emit(health, max_health, false)
 
 func _process(delta: float) -> void:
 	if health_regen > 0:
@@ -80,10 +90,15 @@ func _process(delta: float) -> void:
 	if glucose_regen > 0:
 		glucose = clamp(glucose + glucose_regen * delta, -max_glucose, max_glucose)
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
+	player_character = _get_player()
+	if player_character == null:
+		return
 	
+	_check_stage()
 	vec_to_player = player_character.global_position - global_position
-	
+	if Events.level != Events.Levels.heart:
+		attk_in_progress = true
 	if not attk_in_progress:
 		_attack_switch()
 		if curr_attack == Attack.spawn_enemies:
@@ -98,6 +113,18 @@ func _physics_process(delta: float) -> void:
 
 # --- USER FUNCTIONS ---
 
+func _check_stage() -> void:
+	if health/max_health < 0.5 and stage == Stage.stage1:
+		health *= 1.5
+		_change_health(health, max_health)
+		allowed_attacks.append(Attack.toxin_stream)
+		stage = Stage.stage2
+	elif health/max_health < 0.3 and stage == Stage.stage2:
+		health *= 1.25
+		_change_health(health, max_health)
+		allowed_attacks.append(Attack.ground_shake)
+		stage = Stage.stage3
+
 func _attack_spawn_enemies() -> void:
 	attk_in_progress = true
 	for x in range(10):
@@ -106,8 +133,8 @@ func _attack_spawn_enemies() -> void:
 		add_child(enemy)
 		enemy.global_position = mouth.global_position
 		enemy.shot_by_boss = true
-		enemy.boss_set_vec = vec_to_player
-		enemy.boss_set_speed = 100.0
+		enemy.boss_set_vec = vec_to_player.normalized()
+		enemy.boss_set_speed = 200
 	attk_in_progress = false
 
 func _attack_spin() -> void:
@@ -123,7 +150,7 @@ func _attack_spin() -> void:
 		toxin.global_position = boss_character.global_position
 		rand = randf_range(-max_bullet_direction_rotation,max_bullet_direction_rotation)
 		toxin.velocity = Vector2.RIGHT.rotated(ang) * toxin_speed
-		ang += 360/intervals
+		ang += 360.0/intervals
 	attk_in_progress = false
 
 func _attack_ground_shake() -> void:
@@ -138,7 +165,7 @@ func _attack_toxin_stream() -> void:
 	attk_in_progress = true
 	var bullets: int = 50
 	for x in range(bullets):
-		await get_tree().create_timer(5/bullets).timeout
+		await get_tree().create_timer(5.0/bullets).timeout
 		var toxin = toxin_scene.instantiate()
 		toxin.set_meta("attack_damage",stream_attack_damage + randi_range(-stream_attack_damage/5,stream_attack_damage/5))
 		get_parent().add_child(toxin)
@@ -147,35 +174,6 @@ func _attack_toxin_stream() -> void:
 		rand = randf_range(-max_bullet_direction_rotation,max_bullet_direction_rotation)
 		toxin.velocity = (vec_to_player + Vector2.RIGHT.rotated(randf_range(-10,10))) * toxin_speed
 	attk_in_progress = false
-
-# Movement:
-#func _navigate_to_point_between(attack_target,compare) -> Vector2:
-	## Nav path to the closest cell
-	#var path: PackedVector2Array = NavigationServer2D.map_get_path(
-		#nav.get_navigation_map(), 
-		#attack_target.global_position, 
-		#compare.global_position, 
-		#true
-	#)
-	#
-	#if path.size() > 1:
-		## Find max point away where still in attack range
-		#var remaining_dist = attack_range
-		#for i in range(path.size() - 1, 0, -1):
-			#path_current = path[i]
-			#path_next = path[i-1]
-			#segment_dist = path_current.distance_to(path_next)
-			#
-			#if segment_dist >= remaining_dist:
-				#return path_current + (path_next - path_current).normalized() * remaining_dist
-			#else:
-				## Have not yet reached the correct distance
-				#remaining_dist -= segment_dist
-		## This code shouldn't ever run, but is needed to prevent error, and would be correct if it did run
-		#return path_next
-	#else:
-		## No path found
-		#return attack_target.global_position + (boss_character.global_position - attack_target.global_position).normalized() * attack_range
 
 func _move_to_position(move_pos:Vector2) -> void:
 	nav.set_target_position(move_pos)
@@ -206,33 +204,16 @@ func _on_velocity_computed(safe_velocity: Vector2) -> void:
 
 # Health:
 func _change_health(new: float, max_value: float):
-	health_bar.max_value = max_value
-	health_bar.value = new
+	Events.boss_health_changed.emit(new, max_value, true)
 
-# Attack:
-func _check_attack() -> bool:
-	if target == null:
-		return false
-	#if boss_character.global_position.distance_to(target.global_position) > attack_range:
-		#return false
-	if not get_meta("needs_los"):
-		return true
-
-	raycast.target_position = raycast.to_local(target.global_position)
-	raycast.force_raycast_update()
-	return raycast.is_colliding() and \
-		(raycast.get_collider().is_in_group("Player") or \
-		raycast.get_collider().is_in_group("cells"))
 
 func _attack_switch() -> void:
-	
-	curr_attack = Attack.values().pick_random()
+	curr_attack = allowed_attacks.pick_random()
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if state == State.dying:
 		return
-
 	if body.is_in_group("Antigens"):
 		var amount = body.get_meta("attack_damage")
 		health -= amount
@@ -244,18 +225,11 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		
 		_change_health(health,max_health)
 	if health <= 0:
-		Events.enemy_died_sound.emit()
 		_die()
 
-# Death:
 func _die() -> void:
-	state = State.dying
-
-	var mat := $CharacterBody2D/Sprite2D.material as ShaderMaterial
-	var tween = create_tween()
-	tween.tween_property(mat, "shader_parameter/progress", 1.0, 0.6)
-	await tween.finished
-	queue_free()
+	print("died")
+	queue_free() # Temporary, add win condition...
 
 func save() -> Dictionary:
 	var save_dict = {
@@ -272,15 +246,20 @@ func save() -> Dictionary:
 		"max_health": max_health,
 		"glucose": glucose,
 		"max_glucose": max_glucose,
+		"health_regen": health_regen,
+		"glucose_regen": glucose_regen,
 		"movement_speed": movement_speed,
-		#"attack_damage": attack_damage,
-		"enemy_size_divisor": Events.enemy_size_divisor,
-		#"texture_rand": texture_rand
+		"stream_attack_damage": stream_attack_damage,
+		"spin_attack_damage": spin_attack_damage,
+		"allowed_attacks": allowed_attacks,
+		"stage": stage,
+		"state": state,
 	}
 
 	return save_dict
 
 func load_data(data: Dictionary) -> void:
+	position = Vector2(data["pos_x"], data["pos_y"])
 	rotation = data["rotation"]
 	scale = Vector2(data["scale_x"], data["scale_y"])
 	boss_character.position = Vector2(data["body_x"], data["body_y"])
@@ -288,22 +267,20 @@ func load_data(data: Dictionary) -> void:
 	max_health = data["max_health"]
 	glucose = data["glucose"]
 	max_glucose = data["max_glucose"]
+	health_regen = data["health_regen"]
+	glucose_regen = data["glucose_regen"]
 	movement_speed = data["movement_speed"]
-	#attack_damage = data["attack_damage"]
-	Events.enemy_size_divisor = data["enemy_size_divisor"]
-	#texture_rand = data["texture_rand"]
+	stream_attack_damage = data["stream_attack_damage"]
+	spin_attack_damage = data["spin_attack_damage"]
 
-	#attack_switch_timer.wait_time = switch_time
+	allowed_attacks = []
+	for a in data["allowed_attacks"]:
+		allowed_attacks.append(int(a))
+	stage = int(data["stage"]) as Stage
+	state = int(data["state"]) as State
+
+	attk_in_progress = false
 	_change_health(health, max_health)
-	
-	#if texture_rand == 1:
-		#sprite_texture.diffuse_texture = diffuse_1
-		#sprite_texture.normal_texture = normal_1
-	#elif texture_rand == 2:
-		#sprite_texture.diffuse_texture = diffuse_2
-		#sprite_texture.normal_texture = normal_2
-	#else:
-		#sprite_texture.diffuse_texture = diffuse_3
-		#sprite_texture.normal_texture = normal_3
+	_change_health(health, max_health)
 
 # obligatory pf 🏳️‍🌈

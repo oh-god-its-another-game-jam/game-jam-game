@@ -55,6 +55,7 @@ scale = Vector2(3.3615494, 3.3615499)
 texture = ExtResource("2_5sr82")
 
 [node name="Brain2" type="Sprite2D" parent="." unique_id=713567824]
+z_index = -1
 position = Vector2(-89, 82)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_n44wt")
