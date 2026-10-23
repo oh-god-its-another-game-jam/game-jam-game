@@ -2,14 +2,13 @@ extends Node2D
 
 var antigen_scene = preload("res://scenes/player/antigen.tscn")
 var damage_number_scene = preload("res://scenes/ui/damage_num.tscn")
-@onready var centre = $Centre
+var basic_enemy_scene = preload("res://scenes/enemy_stuff/basic_enemy.tscn")
+@onready var mouth = $Mouth
 
 @onready var boss_character = $CharacterBody2D
 
 # --- VARIABLES ---
-const time_to_resize = 0.5
-
-var rand : float
+var rand: float
 # import toxins
 var toxin_speed = 750
 var toxin_scene = preload("res://scenes/enemy_stuff/toxin.tscn")
@@ -20,17 +19,16 @@ var toxin_scene = preload("res://scenes/enemy_stuff/toxin.tscn")
 @onready var health = max_health
 @onready var glucose = max_glucose
 @onready var movement_speed = get_meta("movement_speed")
-@onready var attack_range = get_meta("attack_range")
-@onready var los_range = get_meta("los_range")
+
 
 @onready var health_regen = get_meta("health_regen")
 @onready var glucose_regen = get_meta("glucose_regen")
 var movement_delta: float
 
 # attack
-var attack_timer: Timer
-@onready var reload = get_meta("attack_reload")
-@onready var attack_damage = get_meta("attack_damage")
+var attack_switch_timer: Timer
+@onready var switch_time = get_meta("attack_switch_time")
+@onready var stream_attack_damage = get_meta("stream_attack_damage")
 
 # target the player
 @onready var player_character = get_tree().get_first_node_in_group("Player")
@@ -39,8 +37,15 @@ var target_pos
 var max_bullet_direction_rotation = 0.1
 
 # state
+enum Stage {stage1}
+var stage = Stage.stage1
+
 enum State {idle, spotted, attack, dying}
 var state := State.idle
+
+enum Attack {spawn_enemies, spin_attack, ground_shake, toxin_stream}
+var curr_attack = Attack.spawn_enemies
+
 #enum Target_type {player, cell}
 @onready var target
 
@@ -70,6 +75,14 @@ var texture_rand = randi_range(1,3)
 
 func _ready() -> void:
 	_change_health(health, max_health)
+	
+	attack_switch_timer = Timer.new()
+	attack_switch_timer.wait_time = switch_time
+	attack_switch_timer.autostart = true
+	attack_switch_timer.one_shot = false
+	attack_switch_timer.timeout.connect(_attack_switch.bind())
+	add_child(attack_switch_timer)
+	
 
 func _process(delta: float) -> void:
 	if health_regen > 0:
@@ -81,35 +94,36 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	pass
 
+
 # --- USER FUNCTIONS ---
 # Movement:
-func _navigate_to_point_between(attack_target,compare) -> Vector2:
-	# Nav path to the closest cell
-	var path: PackedVector2Array = NavigationServer2D.map_get_path(
-		nav.get_navigation_map(), 
-		attack_target.global_position, 
-		compare.global_position, 
-		true
-	)
-	
-	if path.size() > 1:
-		# Find max point away where still in attack range
-		var remaining_dist = attack_range
-		for i in range(path.size() - 1, 0, -1):
-			path_current = path[i]
-			path_next = path[i-1]
-			segment_dist = path_current.distance_to(path_next)
-			
-			if segment_dist >= remaining_dist:
-				return path_current + (path_next - path_current).normalized() * remaining_dist
-			else:
-				# Have not yet reached the correct distance
-				remaining_dist -= segment_dist
-		# This code shouldn't ever run, but is needed to prevent error, and would be correct if it did run
-		return path_next
-	else:
-		# No path found
-		return attack_target.global_position + (boss_character.global_position - attack_target.global_position).normalized() * attack_range
+#func _navigate_to_point_between(attack_target,compare) -> Vector2:
+	## Nav path to the closest cell
+	#var path: PackedVector2Array = NavigationServer2D.map_get_path(
+		#nav.get_navigation_map(), 
+		#attack_target.global_position, 
+		#compare.global_position, 
+		#true
+	#)
+	#
+	#if path.size() > 1:
+		## Find max point away where still in attack range
+		#var remaining_dist = attack_range
+		#for i in range(path.size() - 1, 0, -1):
+			#path_current = path[i]
+			#path_next = path[i-1]
+			#segment_dist = path_current.distance_to(path_next)
+			#
+			#if segment_dist >= remaining_dist:
+				#return path_current + (path_next - path_current).normalized() * remaining_dist
+			#else:
+				## Have not yet reached the correct distance
+				#remaining_dist -= segment_dist
+		## This code shouldn't ever run, but is needed to prevent error, and would be correct if it did run
+		#return path_next
+	#else:
+		## No path found
+		#return attack_target.global_position + (boss_character.global_position - attack_target.global_position).normalized() * attack_range
 
 func _move_to_position(move_pos:Vector2) -> void:
 	nav.set_target_position(move_pos)
@@ -147,8 +161,8 @@ func _change_health(new: float, max_value: float):
 func _check_attack() -> bool:
 	if target == null:
 		return false
-	if boss_character.global_position.distance_to(target.global_position) > attack_range:
-		return false
+	#if boss_character.global_position.distance_to(target.global_position) > attack_range:
+		#return false
 	if not get_meta("needs_los"):
 		return true
 
@@ -158,15 +172,9 @@ func _check_attack() -> bool:
 		(raycast.get_collider().is_in_group("Player") or \
 		raycast.get_collider().is_in_group("cells"))
 
-func _attack() -> void:
-	var toxin = toxin_scene.instantiate()
-	toxin.set_meta("attack_damage",attack_damage + randi_range(-attack_damage/5,attack_damage/5))
-	get_parent().add_child(toxin)
-	toxin.set_meta("shooter",get_instance_id())
-	toxin.global_position = boss_character.global_position
-	rand = randf_range(-max_bullet_direction_rotation,max_bullet_direction_rotation)
-	toxin.velocity = (target.global_position - boss_character.global_position).normalized().rotated(rand)\
-		 * toxin_speed
+func _attack_switch() -> void:
+	
+	curr_attack = Attack.values().pick_random()
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
@@ -213,8 +221,7 @@ func save() -> Dictionary:
 		"glucose": glucose,
 		"max_glucose": max_glucose,
 		"movement_speed": movement_speed,
-		"attack_damage": attack_damage,
-		"reload": reload,
+		#"attack_damage": attack_damage,
 		"enemy_size_divisor": Events.enemy_size_divisor,
 		"texture_rand": texture_rand
 	}
@@ -230,12 +237,11 @@ func load_data(data: Dictionary) -> void:
 	glucose = data["glucose"]
 	max_glucose = data["max_glucose"]
 	movement_speed = data["movement_speed"]
-	attack_damage = data["attack_damage"]
-	reload = data["reload"]
+	#attack_damage = data["attack_damage"]
 	Events.enemy_size_divisor = data["enemy_size_divisor"]
 	texture_rand = data["texture_rand"]
 
-	attack_timer.wait_time = reload
+	attack_switch_timer.wait_time = switch_time
 	_change_health(health, max_health)
 	
 	if texture_rand == 1:

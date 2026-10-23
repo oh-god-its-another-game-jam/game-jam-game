@@ -15,8 +15,18 @@ polygon = PackedVector2Array(36, 0, 33.26, 13.78, 25.46, 25.46, 13.78, 33.26, 0,
 
 [node name="Boss" type="Node2D" unique_id=101596049]
 script = ExtResource("1_j8cug")
+metadata/max_health = 0.0
+metadata/max_glucose = 0.0
+metadata/movement_speed = 0.0
+metadata/health_regen = 0.0
+metadata/glucose_regen = 0.0
+metadata/attack_switch_time = 0.0
+metadata/stream_attack_damage = 0.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1906819446]
+
+[node name="Mouth" type="Marker2D" parent="CharacterBody2D" unique_id=1886828425]
+position = Vector2(8, 16)
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=421746252]
 
