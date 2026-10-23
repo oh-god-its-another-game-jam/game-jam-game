@@ -3,6 +3,7 @@ extends Node2D
 var antigen_scene = preload("res://scenes/player/antigen.tscn")
 var damage_number_scene = preload("res://scenes/ui/damage_num.tscn")
 @onready var centre = $Centre
+@onready var hud = get_tree().get_first_node_in_group("HUD")
 
 @onready var character = $CharacterBody2D
 
@@ -99,6 +100,9 @@ func _ready() -> void:
 	_change_health(health, max_health)
 
 func _process(delta: float) -> void:
+	if not is_instance_valid(hud):
+		hud = get_tree().get_first_node_in_group("HUD")
+		
 	var tween = get_tree().create_tween()
 	tween.tween_property(
 		self,
@@ -338,6 +342,8 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 
 # Death:
 func _die() -> void:
+	player_character.gold += 1
+	
 	state = State.dying
 
 	if Upgrades.attack_upgrades["exploding_enemies_on_death"]:

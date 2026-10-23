@@ -12,6 +12,10 @@ extends CanvasLayer
 func _ready() -> void:
 	character.health_changed.connect(_on_health_change)
 
+func _process(_delta: float) -> void:
+	if get_tree().get_first_node_in_group("Player"):
+		if $Gold.text != str(get_tree().get_first_node_in_group("Player")):
+			$Gold.text = str(get_tree().get_first_node_in_group("Player").gold)
 # User functions
 
 func _on_health_change(new: float, max_value: float) -> void:
