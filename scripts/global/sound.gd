@@ -24,6 +24,7 @@ func _ready() -> void:
 	Events.enemy_died_sound.connect(play_sound.bind(enemy_SFX, enemy_die_sound))
 	Events.dash_sound.connect(play_sound.bind(player_SFX, dash_sound))
 	Events.player_take_damage.connect(play_sound.bind(player_SFX, take_damage_sound, take_damage_meme_sound))
+	Events.soundtrack_request.connect(s_req)
 	switch_track(music1, music2, garbage_wastes)
 
 func _process(_delta: float) -> void:
@@ -32,6 +33,12 @@ func _process(_delta: float) -> void:
 		music2.volume_linear = Events.music_volume * (Events.master_volume/100)
 	
 # User functions
+
+func s_req(sound:NodePath):
+	var sound_obj = load(sound)
+	switch_track(music1, music2, sound_obj)
+
+
 func play_sound(player: AudioStreamPlayer, sound: AudioStream, meme_SFX = null) -> void:
 	player.stop()
 	if Events.meme_SFX and meme_SFX != null:
