@@ -131,7 +131,7 @@ func _move(delta: float) -> void:
 				velocity.x = max(velocity.x - (delta / time_to_max_velocity) * max_velocity, 0)
 			elif velocity.x < 0:
 				velocity.x = min(velocity.x + (delta / time_to_max_velocity) * max_velocity, 0)
-		if in_heart_stream:
+		if Events.level == Events.Levels.heart:
 			velocity += get_tree().get_first_node_in_group("heart_stream_follower").get_push(global_position)
 			#print(get_tree().get_first_node_in_group("heart_stream_follower").get_push(global_position))
 func _dash() -> void:

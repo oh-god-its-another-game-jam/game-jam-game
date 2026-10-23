@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dvpmieqoyucs" path="res://scenes/player/player_character_body_2d.tscn" id="1_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://c42rvvvlc7iwv" path="res://scenes/enemy_stuff/basic_enemy.tscn" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://dfu737ys3bl11" path="res://scripts/main.gd" id="1_muem4"]
 [ext_resource type="PackedScene" uid="uid://df56635vv31xq" path="res://scenes/global/sound.tscn" id="1_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://cilmvhpq6adfm" path="res://scenes/ui/HUD.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://dmrjqd12j74cf" path="res://scenes/ui/minimap.tscn" id="7_85g3d"]
@@ -53,7 +54,24 @@ vertices = PackedVector2Array(166.79688, -208.02344, 155.17969, 399.8672, -958.1
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-968, 396, 165, 410, 177, -218, -975, -221)])
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jpry"]
+size = Vector2(3465, 2359)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fos50"]
+radius = 1221.4193
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_glkys"]
+size = Vector2(3558, 3032)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_we613"]
+size = Vector2(2911, 2394)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_glkys"]
+radius = 799.0
+height = 1598.0
+
 [node name="Main" type="Node2D" unique_id=577279995]
+script = ExtResource("1_muem4")
 
 [node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
 z_index = 1
@@ -67,10 +85,10 @@ position = Vector2(-2372, 3799)
 position = Vector2(-448, 2330)
 
 [node name="Kidneys" parent="Organs" unique_id=116522162 instance=ExtResource("12_2wyq8")]
-position = Vector2(-378, 5164)
+position = Vector2(-519, 5821)
 
 [node name="Liver" parent="Organs" unique_id=841144382 instance=ExtResource("11_og1vs")]
-position = Vector2(-3794, 3429)
+position = Vector2(-4778, 3780)
 
 [node name="Lungs" parent="Organs" unique_id=462232862 instance=ExtResource("13_vxglm")]
 position = Vector2(-212, -3481)
@@ -131,3 +149,47 @@ return_node_path = NodePath("../PauseMenu")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=544023703]
 color = Color(0.16206557, 0.1620656, 0.16206557, 1)
+
+[node name="Locations" type="Node2D" parent="." unique_id=80261756]
+
+[node name="Brain" type="Area2D" parent="Locations" unique_id=2085458914]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Brain" unique_id=65652842]
+position = Vector2(-230.5, -8535.5)
+shape = SubResource("RectangleShape2D_7jpry")
+
+[node name="Heart" type="Area2D" parent="Locations" unique_id=1273438959]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Heart" unique_id=2141675980]
+position = Vector2(-180, -6092)
+shape = SubResource("CircleShape2D_fos50")
+
+[node name="Lungs" type="Area2D" parent="Locations" unique_id=1067691107]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Lungs" unique_id=1687337814]
+position = Vector2(-317, -3278)
+shape = SubResource("RectangleShape2D_glkys")
+
+[node name="Intestines" type="Area2D" parent="Locations" unique_id=1869248755]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Intestines" unique_id=1427418042]
+position = Vector2(-441.5, 2330)
+shape = SubResource("RectangleShape2D_we613")
+
+[node name="Liver" type="Area2D" parent="Locations" unique_id=865487889]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Liver" unique_id=1833807174]
+position = Vector2(-4647, 3932)
+shape = SubResource("RectangleShape2D_glkys")
+
+[node name="Kidneys" type="Area2D" parent="Locations" unique_id=42208952]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Kidneys" unique_id=444292604]
+position = Vector2(-457, 5786)
+shape = SubResource("CapsuleShape2D_glkys")
+
+[node name="Appendix" type="Area2D" parent="Locations" unique_id=1113324607]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Appendix" unique_id=2037042793]
+position = Vector2(-2001, 4331)
+shape = SubResource("CapsuleShape2D_glkys")
