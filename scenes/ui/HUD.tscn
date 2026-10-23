@@ -16,12 +16,11 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yx0xg"]
 shader = ExtResource("3_6bi52")
-shader_parameter/color = Color(0, 0, 0, 1)
-shader_parameter/num_cells = 10.0
-shader_parameter/smoothness = 1.0
-shader_parameter/strength = 0.015
-shader_parameter/shake_speed = 25.0
-shader_parameter/outline_amount = 1.0
+shader_parameter/frequency = 4.0
+shader_parameter/amplitude = 2.0
+shader_parameter/ripple_rate = 5.0
+shader_parameter/wave_amplitude = 0.05
+shader_parameter/wave_frequency = 4.0
 shader_parameter/origin = Vector2(0.5, 0.5)
 shader_parameter/progress = 0.0
 shader_parameter/max_radius = 1.2
@@ -95,17 +94,19 @@ offset_right = 1013.0
 offset_bottom = 81.0
 label_settings = ExtResource("8_l20r4")
 
-[node name="Container" type="Container" parent="." unique_id=1800757925]
+[node name="Control" type="Control" parent="." unique_id=2008539748]
+layout_mode = 3
+anchors_preset = 0
 offset_left = 453.0
 offset_right = 933.0
 offset_bottom = 96.0
 
-[node name="BossBar" type="TextureProgressBar" parent="Container" unique_id=41840727]
-layout_mode = 2
+[node name="BossBar" type="TextureProgressBar" parent="Control" unique_id=41840727]
+layout_mode = 0
 value = 50.0
 texture_over = ExtResource("9_euikm")
 texture_progress = ExtResource("10_p4k5r")
 
-[node name="BossBarLight" type="TextureProgressBar" parent="Container" unique_id=100213931]
-layout_mode = 2
+[node name="BossBarLight" type="TextureProgressBar" parent="Control" unique_id=100213931]
+layout_mode = 0
 texture_progress = ExtResource("11_p4k5r")

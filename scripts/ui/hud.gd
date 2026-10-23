@@ -7,8 +7,8 @@ extends CanvasLayer
 # --- HEALTH AND GLUCOSE ---
 @onready var health_bar: TextureProgressBar = $HealthBar
 
-@onready var boss_bar: TextureProgressBar = $Container/BossBar
-@onready var boss_bar_light: TextureProgressBar = $Container/BossBarLight
+@onready var boss_bar: TextureProgressBar = $Control/BossBar
+@onready var boss_bar_light: TextureProgressBar = $Control/BossBarLight
 
 var max_tween: Tween
 var val_tween: Tween
