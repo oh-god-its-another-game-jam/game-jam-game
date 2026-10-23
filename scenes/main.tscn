@@ -55,6 +55,10 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-968, 396, 165, 410, 17
 
 [node name="Main" type="Node2D" unique_id=577279995]
 
+[node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
+z_index = 1
+position = Vector2(-2372, 3799)
+
 [node name="Organs" type="Node" parent="." unique_id=687573164]
 
 [node name="Stomach" parent="Organs" unique_id=1091828643 instance=ExtResource("8_jscy8")]
@@ -124,9 +128,6 @@ offset_bottom = 40.0
 [node name="OptionsMenu" parent="UI" unique_id=165116578 instance=ExtResource("15_jbj1t")]
 visible = true
 return_node_path = NodePath("../PauseMenu")
-
-[node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
-position = Vector2(3042, 1117)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=544023703]
 color = Color(0.16206557, 0.1620656, 0.16206557, 1)
