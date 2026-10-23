@@ -8,7 +8,7 @@ extends SubViewport
 
 func _ready() -> void:
 	world_2d = get_tree().root.world_2d
-	camera_node.zoom= Vector2(0.075, 0.075)
+	camera_node.zoom= Vector2(0.025, 0.025)
 
 func _process(_delta: float) -> void:
 	if not is_instance_valid(player_node):

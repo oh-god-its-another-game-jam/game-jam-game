@@ -7,12 +7,23 @@ var breathing_timer: Timer
 @export var breathe_distance: float
 @export var shrink_scale: float = 0.85
 
+var lungs_base_pos: Vector2
+var lung1_base_pos: Vector2
+var lung2_base_pos: Vector2
+var lung1_base_scale: Vector2
+var lung2_base_scale: Vector2
+
+@onready var lung1: Sprite2D = $Lung1
+@onready var lung2: Sprite2D = $Lung2
 @onready var lungs_tilemap: TileMapLayer = $Lungs
 @onready var centre: Marker2D = $Centre
 
-var lungs_base_pos: Vector2
-
 func _ready() -> void:
+	lung1_base_pos = lung1.position
+	lung2_base_pos = lung2.position
+	lung1_base_scale = lung1.scale
+	lung2_base_scale = lung2.scale
+	
 	lungs_base_pos = lungs_tilemap.position
 
 	breathing_timer = Timer.new()
@@ -47,9 +58,17 @@ func _breathe_switch() -> void:
 			last[0] = t
 		tween.tween_method(apply_offset, 0.0, 1.0, breathing_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 	
-	var scale_tween = create_tween()
-	scale_tween.tween_method(_set_lungs_scale, lungs_tilemap.scale.x, target_scale, breathing_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	var tilemap_scale_tween = create_tween()
+	tilemap_scale_tween.tween_method(_set_lungs_scale, lungs_tilemap.scale.x, target_scale, breathing_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+
 
 func _set_lungs_scale(s: float) -> void:
 	lungs_tilemap.scale = Vector2(s, s)
-	lungs_tilemap.position = centre.position - (centre.position - lungs_base_pos) * s
+	lungs_tilemap.position = centre.position + (lungs_base_pos - centre.position) * s
+
+	lung1.scale = lung1_base_scale * s
+	lung1.position = centre.position + (lung1_base_pos - centre.position) * s
+
+	lung2.scale = lung2_base_scale * s
+	lung2.position = centre.position + (lung2_base_pos - centre.position) * s
