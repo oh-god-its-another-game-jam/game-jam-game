@@ -136,7 +136,16 @@ func _attack_ground_shake() -> void:
 
 func _attack_toxin_stream() -> void:
 	attk_in_progress = true
-	
+	var bullets: int = 50
+	for x in range(bullets):
+		await get_tree().create_timer(5/bullets).timeout
+		var toxin = toxin_scene.instantiate()
+		toxin.set_meta("attack_damage",stream_attack_damage + randi_range(-stream_attack_damage/5,stream_attack_damage/5))
+		get_parent().add_child(toxin)
+		toxin.set_meta("shooter",get_instance_id())
+		toxin.global_position = boss_character.global_position
+		rand = randf_range(-max_bullet_direction_rotation,max_bullet_direction_rotation)
+		toxin.velocity = (vec_to_player + Vector2.RIGHT.rotated(randf_range(-10,10))) * toxin_speed
 	attk_in_progress = false
 
 # Movement:
