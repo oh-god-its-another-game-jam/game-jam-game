@@ -40,7 +40,7 @@ var target_pos
 var max_bullet_direction_rotation = 0.1
 
 # state
-enum Stage {stage1}
+enum Stage {stage1, stage2, stage3}
 var stage = Stage.stage1
 
 enum State {idle, spotted, attack, dying}
@@ -48,6 +48,7 @@ var state := State.idle
 
 enum Attack {spawn_enemies, spin_attack, ground_shake, toxin_stream}
 var curr_attack = Attack.spawn_enemies
+var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spawn_enemies]
 
 var attk_in_progress := false
 
@@ -96,6 +97,16 @@ func _physics_process(delta: float) -> void:
 
 
 # --- USER FUNCTIONS ---
+
+func _check_stage() -> void:
+	if health/max_health < 0.5 and stage == Stage.stage1:
+		_change_health(health*1.5, max_health)
+		allowed_attacks.append(Attack.toxin_stream)
+		stage = Stage.stage2
+	elif health/max_health < 0.3 and stage == Stage.stage2:
+		_change_health(health*1.25, max_health)
+		allowed_attacks.append(Attack.ground_shake)
+		stage = Stage.stage3
 
 func _attack_spawn_enemies() -> void:
 	attk_in_progress = true
@@ -178,24 +189,9 @@ func _on_velocity_computed(safe_velocity: Vector2) -> void:
 func _change_health(new: float, max_value: float):
 	Events.boss_health_changed.emit(new, max_value, true)
 
-# Attack:
-func _check_attack() -> bool:
-	if target == null:
-		return false
-	#if boss_character.global_position.distance_to(target.global_position) > attack_range:
-		#return false
-	if not get_meta("needs_los"):
-		return true
-
-	raycast.target_position = raycast.to_local(target.global_position)
-	raycast.force_raycast_update()
-	return raycast.is_colliding() and \
-		(raycast.get_collider().is_in_group("Player") or \
-		raycast.get_collider().is_in_group("cells"))
 
 func _attack_switch() -> void:
-	
-	curr_attack = Attack.values().pick_random()
+	curr_attack = allowed_attacks.pick_random()
 
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
@@ -216,15 +212,8 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		Events.enemy_died_sound.emit()
 		_die()
 
-# Death:
 func _die() -> void:
-	state = State.dying
-
-	var mat := $CharacterBody2D/Sprite2D.material as ShaderMaterial
-	var tween = create_tween()
-	tween.tween_property(mat, "shader_parameter/progress", 1.0, 0.6)
-	await tween.finished
-	queue_free()
+	queue_free() # Temporary, add win condition...
 
 func save() -> Dictionary:
 	var save_dict = {
