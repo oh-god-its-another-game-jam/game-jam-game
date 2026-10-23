@@ -16,6 +16,7 @@ func _ready() -> void:
 # User functions
 
 func show_line(text: String, hold: bool = false, hold_time := 1.5):
+	Events.level = Events.Levels.tutorial_lvl
 	instructor.text = text
 	if hold:
 		await get_tree().create_timer(hold_time).timeout

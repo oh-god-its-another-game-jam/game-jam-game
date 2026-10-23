@@ -36,7 +36,14 @@ var movement_delta: float
 @onready var spin_attack_damage = get_meta("spin_attack_damage")
 
 # target the player
-@onready var player_character = get_tree().get_first_node_in_group("Player")
+@onready var player_character: Node2D = _get_player()
+
+func _get_player() -> Node2D:
+	if not is_instance_valid(player_character) or player_character.is_queued_for_deletion():
+		player_character = get_tree().get_first_node_in_group("Player")
+		if player_character and player_character.is_queued_for_deletion():
+			player_character = null
+	return player_character
 
 @onready var vec_to_player: Vector2
 
@@ -83,10 +90,15 @@ func _process(delta: float) -> void:
 	if glucose_regen > 0:
 		glucose = clamp(glucose + glucose_regen * delta, -max_glucose, max_glucose)
 	
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
+	player_character = _get_player()
+	if player_character == null:
+		return
+	
 	_check_stage()
 	vec_to_player = player_character.global_position - global_position
-	
+	if Events.level != Events.Levels.heart:
+		attk_in_progress = true
 	if not attk_in_progress:
 		_attack_switch()
 		if curr_attack == Attack.spawn_enemies:
@@ -260,10 +272,15 @@ func load_data(data: Dictionary) -> void:
 	movement_speed = data["movement_speed"]
 	stream_attack_damage = data["stream_attack_damage"]
 	spin_attack_damage = data["spin_attack_damage"]
-	allowed_attacks = data["allowed_attacks"]
-	stage = data["stage"]
-	state = data["state"]
 
+	allowed_attacks = []
+	for a in data["allowed_attacks"]:
+		allowed_attacks.append(int(a))
+	stage = int(data["stage"]) as Stage
+	state = int(data["state"]) as State
+
+	attk_in_progress = false
+	_change_health(health, max_health)
 	_change_health(health, max_health)
 
 # obligatory pf 🏳️‍🌈

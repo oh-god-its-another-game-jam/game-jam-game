@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="game jam game"
+config/name="Corpus Bellum"
 run/main_scene="uid://cua5eq4mtfe3n"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="uid://bsk63jkdfblw0"
