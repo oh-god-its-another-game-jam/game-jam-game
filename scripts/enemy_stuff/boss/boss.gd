@@ -7,6 +7,10 @@ var basic_enemy_scene = preload("res://scenes/enemy_stuff/basic_enemy.tscn")
 
 @onready var boss_character = $CharacterBody2D
 
+@onready var hitbox = $CharacterBody2D/Hitbox
+
+
+
 # --- VARIABLES ---
 var rand: float
 # import toxins
@@ -69,6 +73,7 @@ var idle_target_pos
 # Godot functions
 
 func _ready() -> void:
+	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	Events.boss_health_changed.emit(health, max_health, false)
 
 func _process(delta: float) -> void:
