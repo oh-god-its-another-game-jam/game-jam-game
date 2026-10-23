@@ -169,6 +169,7 @@ root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_o8ero")
 
 [node name="Label" type="Label" parent="Appendix" unique_id=1838849717]
+light_mask = 2
 offset_left = -1713.0
 offset_top = 1735.0
 offset_right = -1244.0
@@ -182,7 +183,7 @@ script = ExtResource("6_5mkh6")
 [node name="ColorRect" type="ColorRect" parent="Appendix/ShopMenu" unique_id=1293556823]
 offset_right = 1152.0
 offset_bottom = 648.0
-color = Color(0, 0, 0, 0.6039216)
+color = Color(0, 0, 0, 0.9254902)
 
 [node name="Title" type="Label" parent="Appendix/ShopMenu" unique_id=35409832]
 offset_top = 7.0
