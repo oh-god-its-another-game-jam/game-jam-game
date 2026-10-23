@@ -21,17 +21,21 @@ func _ready() -> void:
 	boss_bar.hide()
 	boss_bar_light.hide()
 
+func _process(_delta: float) -> void:
+	if get_tree().get_first_node_in_group("Player"):
+		if $Gold.text != str(get_tree().get_first_node_in_group("Player")):
+			$Gold.text = str(get_tree().get_first_node_in_group("Player").gold)
+			
 # User functions
-
 func _on_health_change(new: float, max_value: float) -> void:
 	health_bar.max_value = max_value
 	health_bar.value = new
 
-func _on_boss_health_change(new: float, max_value: float, visible: bool = false) -> void:
-	if visible:
+func _on_boss_health_change(new: float, max_value: float, visiblity: bool = false) -> void:
+	if visiblity:
 		boss_bar.show()
 		boss_bar_light.show()
-	elif not visible:
+	elif not visiblity:
 		boss_bar.hide()
 		boss_bar_light.hide()
 	

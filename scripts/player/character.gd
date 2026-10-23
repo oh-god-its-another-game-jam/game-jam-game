@@ -44,6 +44,7 @@ var antigen_cooldown_time = 0.2
 var parrying = false
 
 var frame_passed = false
+var gold: int = 500
 
 var in_heart_stream: bool = false
 
@@ -288,7 +289,10 @@ func save() -> Dictionary:
 		"master_volume": Events.master_volume,
 		"music_volume": Events.music_volume,
 		"sfx_volume": Events.sfx_volume,
-		"meme_SFX": Events.meme_SFX
+		"meme_SFX": Events.meme_SFX,
+		"triple_antigens": Upgrades.attack_upgrades["triple_antigens"],
+		"exploding_enemies": Upgrades.attack_upgrades["exploding_enemies"],
+		"parry": Upgrades.action_upgrades["parry"]
 	}
 
 	return save_dict
@@ -309,6 +313,10 @@ func load_data(data: Dictionary) -> void:
 	Events.music_volume = data["music_volume"]
 	Events.sfx_volume = data["sfx_volume"]
 	Events.meme_SFX = data["meme_SFX"]
+	
+	Upgrades.attack_upgrades["triple_antigens"] = data["triple_antigens"]
+	Upgrades.attack_upgrades["exploding_enemies"] = data["exploding_enemies"]
+	Upgrades.action_upgrades["parry"] = data["parry"]
 
 	health_changed.emit(health, max_health)
 	glucose_changed.emit(glucose, max_glucose)
