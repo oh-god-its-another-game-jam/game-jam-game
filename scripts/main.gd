@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var player = $"../Player"
-
+@onready var boss = $"../Organs/Heart/Boss"
 
 var check_timer: Timer
 
@@ -28,6 +28,7 @@ func _check() -> void:
 				"Appendix":
 					Events.level = Events.Levels.appendix
 				"Heart":
+					boss.heart_activated = true
 					Events.level = Events.Levels.heart
 				"Lungs":
 					Events.level = Events.Levels.lungs

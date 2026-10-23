@@ -9,7 +9,8 @@ var basic_enemy_scene = preload("res://scenes/enemy_stuff/basic_enemy.tscn")
 
 @onready var hitbox = $CharacterBody2D/Hitbox
 
-
+var heart_activated: bool = false
+var done: bool = false
 
 # --- VARIABLES ---
 var rand: float
@@ -80,6 +81,7 @@ var idle_target_pos
 # Godot functions
 
 func _ready() -> void:
+	await Events.level == Events.Levels.heart
 	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	Events.boss_health_changed.emit(health, max_health, false)
 
@@ -97,8 +99,14 @@ func _physics_process(_delta: float) -> void:
 	
 	_check_stage()
 	vec_to_player = player_character.global_position - global_position
-	if Events.level != Events.Levels.heart:
+	if heart_activated and not done:
+		done = true
+		attk_in_progress = false
+		Events.soundtrack_request.emit("res://sounds/Tenebre_Rosso_Sangue.mp3")
+	elif not heart_activated:
 		attk_in_progress = true
+	
+	
 	if not attk_in_progress:
 		_attack_switch()
 		if curr_attack == Attack.spawn_enemies:

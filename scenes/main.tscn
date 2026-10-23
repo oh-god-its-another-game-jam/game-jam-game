@@ -93,7 +93,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
 z_index = 1
-position = Vector2(1944, -4897)
+position = Vector2(-305, 5592)
 
 [node name="Organs" type="Node" parent="." unique_id=687573164]
 
