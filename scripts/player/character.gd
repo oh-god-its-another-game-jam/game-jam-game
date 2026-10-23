@@ -57,9 +57,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if health <= 0:
 		_game_over()
-	
+
 	_shooting(delta)
-	
+
 	# Parry:
 	if Input.is_action_just_pressed("parry") and \
 	Events.allowed_actions["parry"] and \
@@ -70,13 +70,13 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("right_click") and \
 	Events.allowed_actions["dash"]:
 		_dash()
-	
+
 	if dashing:
 		move_and_slide()
 		return
-	
+
 	_move(delta)
-	
+
 	move_and_slide()
 
 func _process(delta: float) -> void:
@@ -85,14 +85,14 @@ func _process(delta: float) -> void:
 		return
 	var old_glucose := glucose
 	var old_health := health
-	
+
 	glucose = min(glucose + glucose_regen * delta, max_glucose)
-	
+
 	if glucose != old_glucose:
 		glucose_changed.emit(glucose, max_glucose)
 	if health != old_health:
 		health_changed.emit(health, max_health)
-	
+
 	if Input.is_action_just_pressed("escape") && frame_passed:
 		frame_passed = false
 		pause_menu.show()
@@ -115,7 +115,7 @@ func _move(delta: float) -> void:
 		if Input.is_action_pressed("ui_right"):
 			velocity.x = clamp(velocity.x + (delta/time_to_max_velocity) * max_velocity,
 				-max_velocity,max_velocity)
-		
+
 		if not(Input.is_action_pressed("ui_up") or \
 		Input.is_action_pressed("ui_down")) or (Input.is_action_pressed("ui_up") and \
 		Input.is_action_pressed("ui_down")):
@@ -133,16 +133,16 @@ func _move(delta: float) -> void:
 				velocity.x = min(velocity.x + (delta / time_to_max_velocity) * max_velocity, 0)
 		if in_heart_stream:
 			velocity += get_tree().get_first_node_in_group("heart").get_push(global_position)
-		
+
 func _dash() -> void:
 	if dashing:
 		return
 	elif glucose < dash_glucose_use:
 		Events.error_sound.emit()
 		return
-	
+
 	glucose -= dash_glucose_use
-	
+
 	dashing = true
 	Events.dash_sound.emit()
 	dash_direction = (get_global_mouse_position() - global_position).normalized()
@@ -157,10 +157,10 @@ func _dash() -> void:
 	dash_tween.tween_property(self, "scale", base_scale, 0.15)\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)
-	
+
 	velocity = (get_global_mouse_position()-global_position).normalized() * dash_speed
 	max_velocity = max_velocity * dash_speed
-	
+
 	health_bar.material = load("res://palette_swap_resources/1_invuln_health_bar_light.tres")
 	await get_tree().create_timer(dash_duration/4).timeout
 	health_bar.material = load("res://palette_swap_resources/2_invuln_health_bar_full.tres")
@@ -168,10 +168,10 @@ func _dash() -> void:
 	health_bar.material = load("res://palette_swap_resources/3_invuln_health_bar_dark.tres")
 	await get_tree().create_timer(dash_duration/4).timeout
 	health_bar.material = load("res://palette_swap_resources/0_health_bar.tres")
-	
+
 	velocity = velocity / dash_speed
 	max_velocity = max_velocity / dash_speed
-	
+
 	dashing = false
 
 # Attack:
@@ -181,11 +181,11 @@ func _shooting(delta : float) -> void:
 	else:
 		Events.allowed_actions["shoot"] = false
 		antigen_cooldown_timer -= delta
-	
+
 	if not dashing:
 		# Makes the player look at the mouse
 		look_at(get_global_mouse_position())
-	
+
 	if Input.is_action_just_pressed("left_click") and \
 	Events.allowed_actions["shoot"]:
 		_shoot_antigen()
@@ -240,12 +240,12 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		if body.is_in_group("Toxins"):
 			Events.player_take_damage.emit()
 			var amount = body.get_meta("attack_damage",0)
-			
+
 			var num := damage_number_scene.instantiate()
 			get_tree().current_scene.add_child(num)
 			num.global_position = global_position + Vector2(0, -20)
 			num.setup(amount)
-			
+
 			health -= amount
 			body.queue_free()
 			_animate_health_bar()
@@ -308,12 +308,12 @@ func load_data(data: Dictionary) -> void:
 	glucose_regen = data["glucose_regen"]
 	attack_damage = data["attack_damage"]
 	ammo = int(data["ammo"])
-	
+
 	Events.master_volume = data["master_volume"]
 	Events.music_volume = data["music_volume"]
 	Events.sfx_volume = data["sfx_volume"]
 	Events.meme_SFX = data["meme_SFX"]
-	
+
 	Upgrades.attack_upgrades["triple_antigens"] = data["triple_antigens"]
 	Upgrades.attack_upgrades["exploding_enemies"] = data["exploding_enemies"]
 	Upgrades.action_upgrades["parry"] = data["parry"]
