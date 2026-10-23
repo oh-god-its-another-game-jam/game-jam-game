@@ -7,16 +7,27 @@ extends CanvasLayer
 # --- HEALTH AND GLUCOSE ---
 @onready var health_bar: TextureProgressBar = $HealthBar
 
+@onready var boss_bar: TextureProgressBar = $BossBar
+
 # Godot functions
 
 func _ready() -> void:
 	character.health_changed.connect(_on_health_change)
+	boss_bar.hide()
 
 # User functions
 
 func _on_health_change(new: float, max_value: float) -> void:
 	health_bar.max_value = max_value
 	health_bar.value = new
+
+func _on_boss_health_change(new: float, max_value: float, visible: bool = false) -> void:
+	if visible:
+		boss_bar.show()
+	elif not visible:
+		boss_bar.hide()
+	boss_bar.max_value = max_value
+	boss_bar.value = new
 
 func _notify(text: String, hold: bool = false, hold_time := 1.5):
 	notifier.text = text
