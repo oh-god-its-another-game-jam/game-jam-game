@@ -296,7 +296,7 @@ func _random_cell_position() -> Vector2:
 	var all_cells = get_tree().get_nodes_in_group("cells")
 	if len(all_cells) != 0:
 		var target_cell = all_cells[randi_range(0,len(all_cells) - 1)]
-		return target_cell.position
+		return target_cell.global_position
 	else:
 		return Vector2(0,0) # should never happen
 

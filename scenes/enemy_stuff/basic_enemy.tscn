@@ -52,6 +52,7 @@ offset_right = 61.0
 offset_bottom = -65.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D" unique_id=507440377]
+avoidance_enabled = true
 script = ExtResource("2_ibjif")
 
 [node name="LOS" type="RayCast2D" parent="CharacterBody2D" unique_id=431441184]

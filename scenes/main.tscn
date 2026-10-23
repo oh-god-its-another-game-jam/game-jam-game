@@ -61,9 +61,11 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_muem4")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_glkys"]
-vertices = PackedVector2Array(2005.4609, -794.3828, 845.4297, -633.15625, -1510.2969, -988.14844, -1537.7031, -2586.8281, 642.9531, -2570.289, 2402.7188, -1342.7109, 109.890625, -269.71875, -1763.5313, 10.640625, -791.5469, 2141.7813, -1665.0625, 1922.6719, -3138.6328, 1253.3906, -3311.4375, 497.09375, 667.77344, 507.85156, 58.257813, 2223.1484, -3097.0313, 1741.8984)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(2, 1, 6, 7), PackedInt32Array(8, 9, 10, 11, 7, 6, 12, 13), PackedInt32Array(9, 14, 10)])
+vertices = PackedVector2Array(-787.78906, 2120.0469, -1660.9766, 1901, -3116.8438, 1249.9922, -3285.461, 511.9922, -1758.1328, 32, 299.28906, 32, 643.2031, 511.3203, 43.28125, 2199.6172, -3076.6172, 1722.2969)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5, 6, 7), PackedInt32Array(1, 8, 2)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-1666.9026, 1932.5128, -793.2885, 2151.6672, 65.081314, 2233.85, 678.9565, 506.27463, 124.88579, -265.9676, 848.40247, -623.4807, 2011.0715, -785.0725, 2416.8037, -1345.0955, 646.1227, -2580.2668, -1547.88, -2596.9116, -1520.3231, -989.31616, -1771.8535, 2.774109, -3323.2515, 490.32352, -3148.5288, 1254.937, -3106.3137, 1750.8087)])
+parsed_collision_mask = 4294967041
+agent_radius = 32.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yx0xg"]
 radius = 473.0
@@ -84,14 +86,6 @@ size = Vector2(2911, 2394)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_glkys"]
 radius = 799.0
 height = 1598.0
-
-[sub_resource type="Gradient" id="Gradient_muem4"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_muem4"]
-gradient = SubResource("Gradient_muem4")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
 
 [node name="Main" type="Node2D" unique_id=577279995]
 
@@ -220,11 +214,6 @@ shape = SubResource("CapsuleShape2D_glkys")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Locations/Appendix" unique_id=2037042793]
 position = Vector2(-2001, 4331)
 shape = SubResource("CapsuleShape2D_glkys")
-
-[node name="PointLight2D" type="PointLight2D" parent="." unique_id=856142472]
-position = Vector2(1392, -4725)
-scale = Vector2(50, 50)
-texture = SubResource("GradientTexture2D_muem4")
 
 [node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
 z_index = 1
