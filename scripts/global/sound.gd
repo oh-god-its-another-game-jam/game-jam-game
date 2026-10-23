@@ -26,6 +26,9 @@ var timing := {
 signal beat(num: int)
 var beat_position := 0.0
 var last_beat := -1
+var beat_offset := 0.2
+
+
 # Godot functions
 
 func _ready() -> void:
@@ -48,7 +51,9 @@ func _process(_delta: float) -> void:
 	var bpm: float = timing.get(music2.stream.resource_path, 120)
 	var t := music2.get_playback_position() \
 		+ AudioServer.get_time_since_last_mix() \
-		- AudioServer.get_output_latency()
+		- AudioServer.get_output_latency()\
+		- beat_offset
+	t = maxf(t, 0.0)
 	beat_position = t * bpm / 60.0
 	var beat_no := floori(beat_position)
 	if beat_no != last_beat:
