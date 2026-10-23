@@ -3,8 +3,15 @@
 [ext_resource type="Texture2D" uid="uid://dneywvfhqgxru" path="res://artwork/icon.svg" id="1_6cp3l"]
 [ext_resource type="Script" uid="uid://xxoou1ukddt0" path="res://scripts/levels/heart.gd" id="1_mbvle"]
 [ext_resource type="Texture2D" uid="uid://bkievcj4ekhxc" path="res://artwork/Organs/Heart/Heart.png" id="2_4kqvw"]
+[ext_resource type="Script" uid="uid://cn3r6dopw4lyh" path="res://scripts/levels/heartbeat_path.gd" id="2_383bh"]
 [ext_resource type="Texture2D" uid="uid://b6mh10pxw7bel" path="res://artwork/Temp_Assets/21704-heart-inside.jpg" id="2_j1m5b"]
 [ext_resource type="PackedScene" uid="uid://dqsy8cugqtfk1" path="res://scenes/enemy_stuff/boss/boss.tscn" id="4_s7d4v"]
+
+[sub_resource type="Curve2D" id="Curve2D_mbvle"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -849, -540, 0, 0, 0, 0, -706.3972, 368, 0, 0, 0, 0, -502.8266, 731, 0, 0, 0, 0, -301.6671, 352, 0, 0, 0, 0, -322.33417, -213, 0, 0, 0, 0, -533.1383, -622, 0, 0, 0, 0, -817.65497, -581)
+}
+point_count = 7
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_muem4"]
 texture = ExtResource("1_6cp3l")
@@ -50,6 +57,20 @@ sources/0 = SubResource("TileSetAtlasSource_muem4")
 
 [node name="Heart" type="Node2D" unique_id=1883973132]
 script = ExtResource("1_mbvle")
+
+[node name="BeatPath" type="Path2D" parent="." unique_id=1285262696]
+z_index = 2
+position = Vector2(1615.7905, 0)
+scale = Vector2(2.903169, 1)
+curve = SubResource("Curve2D_mbvle")
+script = ExtResource("2_383bh")
+
+[node name="BeatArea" type="Area2D" parent="BeatPath" unique_id=575841647]
+position = Vector2(-556.561, 0)
+scale = Vector2(0.3444512, 1)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BeatPath/BeatArea" unique_id=1307898369]
+polygon = PackedVector2Array(-1067, -318, -1045, -159, -924, 87, -421, 603, 93, 784, 599, 817, 911, 500, 918, 58, 830, -271, 633, -496, 613, -750, 426, -949, 154, -1009, 22, -959, -6, -815, -187, -715, -469, -676, -706, -762, -888, -700, -1010, -542)
 
 [node name="HeartTemp" type="Sprite2D" parent="." unique_id=1453320081]
 visible = false

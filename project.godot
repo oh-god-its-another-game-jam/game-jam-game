@@ -42,6 +42,7 @@ cells=""
 Buttons="Add UI Buttons here"
 Minimap=""
 movable=""
+sound=""
 
 [input]
 
