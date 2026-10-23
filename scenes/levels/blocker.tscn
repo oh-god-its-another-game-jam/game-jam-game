@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cs5lmfdhgr3wm"]
+
+[ext_resource type="FontFile" uid="uid://cjga5kg7mhhg0" path="res://artwork/Fonts/Body/Iceland-Regular.ttf" id="1_s7y8l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2lxcb"]
+size = Vector2(489, 119)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5i77u"]
+font = ExtResource("1_s7y8l")
+font_size = 30
+font_color = Color(1, 0, 0, 1)
+
+[node name="Blocker" type="CharacterBody2D" unique_id=638590579 groups=["Blocker"]]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1740713228]
+offset_left = -1127.0
+offset_top = -892.0
+offset_right = -1087.0
+offset_bottom = -852.0
+scale = Vector2(12.066667, 3)
+color = Color(0, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=744913267]
+position = Vector2(-882.5, -833.5)
+shape = SubResource("RectangleShape2D_2lxcb")
+
+[node name="Label" type="Label" parent="." unique_id=20024397]
+offset_left = -1233.0
+offset_top = -897.0
+offset_right = -497.0
+offset_bottom = -768.0
+text = "Access Restricted
+If all cells are captured, 
+the entrance to the boss 
+will be opened"
+label_settings = SubResource("LabelSettings_5i77u")
+horizontal_alignment = 1
