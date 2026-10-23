@@ -46,18 +46,18 @@ func _breathe_switch() -> void:
 		offset = Vector2(0, -breathe_distance)
 		target_scale = 1.0
 
-	for node in get_tree().get_nodes_in_group("movable"):
-		if not is_ancestor_of(node):
-			continue
-		var tween = create_tween()
-		var last := [0.0]
-		var apply_offset := func(t: float) -> void:
-			if not is_instance_valid(node):
-				return
-			node.position -= offset * (t - last[0])
-			last[0] = t
-		tween.tween_method(apply_offset, 0.0, 1.0, breathing_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	
+	#for node in get_tree().get_nodes_in_group("movable"):
+		#if not is_ancestor_of(node):
+			#continue
+		#var tween = create_tween()
+		#var last := [0.0]
+		#var apply_offset := func(t: float) -> void:
+			#if not is_instance_valid(node):
+				#return
+			#node.position -= offset * (t - last[0])
+			#last[0] = t
+		#tween.tween_method(apply_offset, 0.0, 1.0, breathing_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	#
 	var tilemap_scale_tween = create_tween()
 	tilemap_scale_tween.tween_method(_set_lungs_scale, lungs_tilemap.scale.x, target_scale, breathing_time).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
