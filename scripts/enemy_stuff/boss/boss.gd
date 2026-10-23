@@ -48,7 +48,7 @@ var state := State.attack
 
 enum Attack {spawn_enemies, spin_attack, ground_shake, toxin_stream}
 var curr_attack = Attack.spawn_enemies
-var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack]
+var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack] #var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack, Attack.ground_shake, Attack.toxin_stream]
 
 var attk_in_progress := false
 

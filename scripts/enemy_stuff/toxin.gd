@@ -7,6 +7,10 @@ const max_bounces: int = 1
 func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
 	if collision:
+		var collider = collision.get_collider()
+		if collider.is_in_group("Toxins"):
+			add_collision_exception_with(collider)
+			collider.add_collision_exception_with(self)
 		bounces += 1
 		if bounces > max_bounces:
 			queue_free()
