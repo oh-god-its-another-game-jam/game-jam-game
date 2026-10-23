@@ -235,6 +235,7 @@ func save() -> Dictionary:
 		"movement_speed": movement_speed,
 		"stream_attack_damage": stream_attack_damage,
 		"spin_attack_damage": spin_attack_damage,
+		"allowed_attacks": allowed_attacks,
 		"stage": stage,
 		"state": state,
 	}
@@ -255,6 +256,7 @@ func load_data(data: Dictionary) -> void:
 	movement_speed = data["movement_speed"]
 	stream_attack_damage = data["stream_attack_damage"]
 	spin_attack_damage = data["spin_attack_damage"]
+	allowed_attacks = data["allowed_attacks"]
 	stage = data["stage"]
 	state = data["state"]
 
