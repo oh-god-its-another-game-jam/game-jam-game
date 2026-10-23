@@ -23,8 +23,7 @@ func _process(_delta: float) -> void:
 			shop_menu.visible = true
 	else:
 		$Label.text = ""
-		initial_dir = (shopkeeper.global_position - player.global_position).normalized()
-
+		initial_dir = (player.global_position-shopkeeper.global_position).normalized()
 
 func _on_shop_menu_shop_exited() -> void:
 	player.velocity += push_force * initial_dir

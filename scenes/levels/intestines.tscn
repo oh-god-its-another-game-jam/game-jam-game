@@ -141,6 +141,7 @@ script = ExtResource("3_htqyc")
 
 [node name="Shopkeeper" type="Sprite2D" parent="Appendix" unique_id=1644151340]
 light_mask = 2
+z_index = 2
 position = Vector2(-1470, 1887)
 scale = Vector2(4, 4)
 texture = ExtResource("3_0a6ad")
