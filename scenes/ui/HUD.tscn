@@ -2,12 +2,30 @@
 
 [ext_resource type="Script" uid="uid://dxyf76kw2wrvm" path="res://scripts/ui/hud.gd" id="1_qpvh6"]
 [ext_resource type="Texture2D" uid="uid://d0el3v10rvch" path="res://artwork/MainChara/HealthBar_outline.png" id="2_1etfg"]
+[ext_resource type="Script" uid="uid://dj0h64ewgxpn1" path="res://scripts/ui/whole_screen_effects.gd" id="2_38nk3"]
+[ext_resource type="Shader" uid="uid://ch530owpkf644" path="res://scripts/global/ripple_shader.gdshader" id="3_6bi52"]
 [ext_resource type="Texture2D" uid="uid://csvxy05xfa8g3" path="res://artwork/MainChara/HealthBar_filling.png" id="3_7hsmw"]
 [ext_resource type="Script" uid="uid://bf7vr12n718hu" path="res://scripts/ui/glucose_bottle.gd" id="4_ig75s"]
 [ext_resource type="Shader" uid="uid://nnndcy4i1pgu" path="res://scripts/ui/glucose_bar.gdshader" id="5_4ed8p"]
 [ext_resource type="Texture2D" uid="uid://bauccbsmkwscm" path="res://artwork/ui/GlucoseBar_fill.png" id="6_jlufg"]
 [ext_resource type="Texture2D" uid="uid://ca85b2lkurph0" path="res://artwork/ui/GlucoseBar_outline.png" id="7_l20r4"]
 [ext_resource type="LabelSettings" uid="uid://cm85wra5wu4if" path="res://scenes/ui/ui_tertiary.tres" id="8_l20r4"]
+[ext_resource type="Texture2D" uid="uid://hi0fdaoxanwt" path="res://artwork/ui/boss_bar_outline.png" id="9_euikm"]
+[ext_resource type="Texture2D" uid="uid://ds8gtkp6jbgf4" path="res://artwork/ui/boss_bar_fill.png" id="10_p4k5r"]
+[ext_resource type="Texture2D" uid="uid://cnnoq6gusn52l" path="res://artwork/ui/boss_bar_fill_light.png" id="11_p4k5r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yx0xg"]
+shader = ExtResource("3_6bi52")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/num_cells = 10.0
+shader_parameter/smoothness = 1.0
+shader_parameter/strength = 0.015
+shader_parameter/shake_speed = 25.0
+shader_parameter/outline_amount = 1.0
+shader_parameter/origin = Vector2(0.5, 0.5)
+shader_parameter/progress = 0.0
+shader_parameter/max_radius = 1.2
+shader_parameter/band_width = 0.15
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rnyu1"]
 shader = ExtResource("5_4ed8p")
@@ -22,6 +40,19 @@ shader_parameter/wave_amplitude_2 = 0.03
 
 [node name="HUD" type="CanvasLayer" unique_id=735888115 groups=["Persist"]]
 script = ExtResource("1_qpvh6")
+
+[node name="WholeScreenEffects" type="CanvasLayer" parent="." unique_id=1955436500]
+layer = 100
+script = ExtResource("2_38nk3")
+
+[node name="ColorRect" type="ColorRect" parent="WholeScreenEffects" unique_id=605494288]
+material = SubResource("ShaderMaterial_yx0xg")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="HealthBar" type="TextureProgressBar" parent="." unique_id=1796126004 groups=["PlayerHealthBar"]]
 offset_left = 29.0
@@ -63,3 +94,18 @@ offset_top = 17.0
 offset_right = 1013.0
 offset_bottom = 81.0
 label_settings = ExtResource("8_l20r4")
+
+[node name="Container" type="Container" parent="." unique_id=1800757925]
+offset_left = 453.0
+offset_right = 933.0
+offset_bottom = 96.0
+
+[node name="BossBar" type="TextureProgressBar" parent="Container" unique_id=41840727]
+layout_mode = 2
+value = 50.0
+texture_over = ExtResource("9_euikm")
+texture_progress = ExtResource("10_p4k5r")
+
+[node name="BossBarLight" type="TextureProgressBar" parent="Container" unique_id=100213931]
+layout_mode = 2
+texture_progress = ExtResource("11_p4k5r")

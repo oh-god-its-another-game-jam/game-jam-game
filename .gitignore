@@ -4,5 +4,4 @@
 .vscode
 Godot_v4*
 
-.vscode
-Godot_v4*
+*.pxo
