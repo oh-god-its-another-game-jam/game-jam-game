@@ -26,12 +26,15 @@ var toxin_scene = preload("res://scenes/enemy_stuff/toxin.tscn")
 var movement_delta: float
 
 # attack
-var attack_switch_timer: Timer
-@onready var switch_time = get_meta("attack_switch_time")
+#var attack_switch_timer: Timer
+#@onready var switch_time = get_meta("attack_switch_time")
 @onready var stream_attack_damage = get_meta("stream_attack_damage")
+@onready var spin_attack_damage = get_meta("spin_attack_damage")
 
 # target the player
 @onready var player_character = get_tree().get_first_node_in_group("Player")
+
+@onready var vec_to_player: Vector2
 
 var target_pos
 var max_bullet_direction_rotation = 0.1
@@ -45,6 +48,8 @@ var state := State.idle
 
 enum Attack {spawn_enemies, spin_attack, ground_shake, toxin_stream}
 var curr_attack = Attack.spawn_enemies
+
+var attk_in_progress := false
 
 #enum Target_type {player, cell}
 @onready var target
@@ -67,13 +72,6 @@ var idle_target_pos
 func _ready() -> void:
 	_change_health(health, max_health)
 	
-	attack_switch_timer = Timer.new()
-	attack_switch_timer.wait_time = switch_time
-	attack_switch_timer.autostart = true
-	attack_switch_timer.one_shot = false
-	attack_switch_timer.timeout.connect(_attack_switch.bind())
-	add_child(attack_switch_timer)
-	
 
 func _process(delta: float) -> void:
 	if health_regen > 0:
@@ -83,10 +81,61 @@ func _process(delta: float) -> void:
 		glucose = clamp(glucose + glucose_regen * delta, -max_glucose, max_glucose)
 	
 func _physics_process(delta: float) -> void:
-	pass
+	
+	vec_to_player = player_character.global_position - global_position
+	
+	if not attk_in_progress:
+		_attack_switch()
+		if curr_attack == Attack.spawn_enemies:
+			_attack_spawn_enemies()
+		elif curr_attack == Attack.spin_attack:
+			_attack_spin()
+		elif curr_attack == Attack.ground_shake:
+			_attack_ground_shake()
+		elif curr_attack == Attack.toxin_stream:
+			_attack_toxin_stream()
 
 
 # --- USER FUNCTIONS ---
+
+func _attack_spawn_enemies() -> void:
+	attk_in_progress = true
+	for x in range(10):
+		await get_tree().create_timer(1.0).timeout
+		var enemy = basic_enemy_scene.instantiate()
+		add_child(enemy)
+		enemy.global_position = mouth.global_position
+		enemy.shot_by_boss = true
+		enemy.boss_set_vec = vec_to_player
+		enemy.boss_set_speed = 100.0
+	attk_in_progress = false
+
+func _attack_spin() -> void:
+	attk_in_progress = true
+	var ang := 0.0
+	var intervals: int = 36
+	for x in range(intervals):
+		await get_tree().create_timer(0.1).timeout
+		var toxin = toxin_scene.instantiate()
+		toxin.set_meta("attack_damage",spin_attack_damage + randi_range(-spin_attack_damage/5,spin_attack_damage/5))
+		get_parent().add_child(toxin)
+		toxin.set_meta("shooter",get_instance_id())
+		toxin.global_position = boss_character.global_position
+		rand = randf_range(-max_bullet_direction_rotation,max_bullet_direction_rotation)
+		toxin.velocity = Vector2.RIGHT.rotated(ang) * toxin_speed
+		ang += 360/intervals
+	attk_in_progress = false
+
+func _attack_ground_shake() -> void:
+	attk_in_progress = true
+	
+	attk_in_progress = false
+
+func _attack_toxin_stream() -> void:
+	attk_in_progress = true
+	
+	attk_in_progress = false
+
 # Movement:
 #func _navigate_to_point_between(attack_target,compare) -> Vector2:
 	## Nav path to the closest cell
@@ -232,7 +281,7 @@ func load_data(data: Dictionary) -> void:
 	Events.enemy_size_divisor = data["enemy_size_divisor"]
 	#texture_rand = data["texture_rand"]
 
-	attack_switch_timer.wait_time = switch_time
+	#attack_switch_timer.wait_time = switch_time
 	_change_health(health, max_health)
 	
 	#if texture_rand == 1:
