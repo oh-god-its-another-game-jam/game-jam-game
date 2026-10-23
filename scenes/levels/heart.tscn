@@ -58,7 +58,7 @@ sources/0 = SubResource("TileSetAtlasSource_muem4")
 [node name="Heart" type="Node2D" unique_id=1883973132]
 script = ExtResource("1_mbvle")
 
-[node name="BeatPath" type="Path2D" parent="." unique_id=1285262696]
+[node name="BeatPath" type="Path2D" parent="." unique_id=1285262696 groups=["heart"]]
 z_index = 2
 position = Vector2(1615.7905, 0)
 scale = Vector2(2.903169, 1)

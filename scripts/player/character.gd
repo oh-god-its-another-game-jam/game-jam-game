@@ -45,6 +45,8 @@ var parrying = false
 
 var frame_passed = false
 
+var in_heart_stream: bool = false
+
 # Godot functions:
 func _ready() -> void:
 	glucose_changed.emit.call_deferred(glucose, max_glucose)
@@ -128,7 +130,9 @@ func _move(delta: float) -> void:
 				velocity.x = max(velocity.x - (delta / time_to_max_velocity) * max_velocity, 0)
 			elif velocity.x < 0:
 				velocity.x = min(velocity.x + (delta / time_to_max_velocity) * max_velocity, 0)
-
+		if in_heart_stream:
+			velocity += get_tree().get_first_node_in_group("heart").get_push(global_position)
+		
 func _dash() -> void:
 	if dashing:
 		return
