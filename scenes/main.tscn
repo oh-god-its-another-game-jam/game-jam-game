@@ -61,9 +61,9 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_muem4")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_glkys"]
-vertices = PackedVector2Array(166.79688, -208.02344, 155.17969, 399.8672, -958.1094, 386.1172, -964.8828, -210.96875)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-968, 396, 165, 410, 177, -218, -975, -221)])
+vertices = PackedVector2Array(2005.4609, -794.3828, 845.4297, -633.15625, -1510.2969, -988.14844, -1537.7031, -2586.8281, 642.9531, -2570.289, 2402.7188, -1342.7109, 109.890625, -269.71875, -1763.5313, 10.640625, -791.5469, 2141.7813, -1665.0625, 1922.6719, -3138.6328, 1253.3906, -3311.4375, 497.09375, 667.77344, 507.85156, 58.257813, 2223.1484, -3097.0313, 1741.8984)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(2, 1, 6, 7), PackedInt32Array(8, 9, 10, 11, 7, 6, 12, 13), PackedInt32Array(9, 14, 10)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1666.9026, 1932.5128, -793.2885, 2151.6672, 65.081314, 2233.85, 678.9565, 506.27463, 124.88579, -265.9676, 848.40247, -623.4807, 2011.0715, -785.0725, 2416.8037, -1345.0955, 646.1227, -2580.2668, -1547.88, -2596.9116, -1520.3231, -989.31616, -1771.8535, 2.774109, -3323.2515, 490.32352, -3148.5288, 1254.937, -3106.3137, 1750.8087)])
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jpry"]
 size = Vector2(3465, 2359)
@@ -93,7 +93,7 @@ fill_from = Vector2(0.5, 0.5)
 
 [node name="Player" parent="." unique_id=2017533679 instance=ExtResource("1_jkv2x")]
 z_index = 1
-position = Vector2(-305, 5592)
+position = Vector2(1834, -4741)
 
 [node name="Organs" type="Node" parent="." unique_id=687573164]
 

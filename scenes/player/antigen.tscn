@@ -18,7 +18,7 @@ fill_to = Vector2(0.5, 0.75)
 [sub_resource type="CanvasTexture" id="CanvasTexture_15cnv"]
 diffuse_texture = ExtResource("1_15cnv")
 
-[node name="Antigen" type="CharacterBody2D" unique_id=1750544342 groups=["Antigens"]]
+[node name="Antigen" type="CharacterBody2D" unique_id=1750544342 groups=["Antigens", "movable"]]
 collision_layer = 12
 collision_mask = 12
 script = ExtResource("1_rmea8")

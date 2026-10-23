@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://jg1ecyu3yhl6"]
+
+[ext_resource type="Script" uid="uid://ymyqdp2c1mjl" path="res://scenes/victory.gd" id="1_hl81x"]
+[ext_resource type="FontFile" uid="uid://bjqteeg6g7sul" path="res://artwork/Fonts/Titles/RubikMicrobe-Regular.ttf" id="1_le47n"]
+[ext_resource type="FontFile" uid="uid://0aelhvskslt4" path="res://artwork/Fonts/Titles/Astloch-Bold.ttf" id="2_faxov"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2lxcb"]
+font = ExtResource("1_le47n")
+font_size = 120
+
+[sub_resource type="LabelSettings" id="LabelSettings_faxov"]
+font = ExtResource("2_faxov")
+font_size = 70
+
+[sub_resource type="LabelSettings" id="LabelSettings_le47n"]
+font = ExtResource("2_faxov")
+font_size = 70
+
+[sub_resource type="LabelSettings" id="LabelSettings_hl81x"]
+font = ExtResource("2_faxov")
+font_size = 70
+
+[node name="Victory" type="Node2D" unique_id=1865628227]
+script = ExtResource("1_hl81x")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=336408156]
+
+[node name="Title" type="Label" parent="CanvasLayer" unique_id=765263832]
+offset_right = 1152.0
+offset_bottom = 435.0
+text = "Congratulations
+on Beating the 
+Game!"
+label_settings = SubResource("LabelSettings_2lxcb")
+horizontal_alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="CanvasLayer" unique_id=916034666]
+offset_top = 436.0
+offset_right = 1152.0
+offset_bottom = 610.0
+
+[node name="_main_menu" type="Label" parent="CanvasLayer/Buttons" unique_id=1542179000]
+layout_mode = 2
+text = "Return to Main Menu"
+label_settings = SubResource("LabelSettings_faxov")
+horizontal_alignment = 1
+
+[node name="_quit_game" type="Label" parent="CanvasLayer/Buttons" unique_id=882623763]
+layout_mode = 2
+text = "Quit Game"
+label_settings = SubResource("LabelSettings_le47n")
+horizontal_alignment = 1
+
+[node name="SelectedButtonIndicator" type="Label" parent="CanvasLayer" unique_id=217728832]
+offset_top = 433.0
+offset_right = 1152.0
+offset_bottom = 518.0
+text = ">                                           <"
+label_settings = SubResource("LabelSettings_hl81x")
+horizontal_alignment = 1

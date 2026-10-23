@@ -19,16 +19,11 @@ var toxin_speed = 750
 var toxin_scene = preload("res://scenes/enemy_stuff/toxin.tscn")
 
 # stats and meta
-@onready var max_health = get_meta("max_health")
+@onready var max_health = 2000
 @onready var max_glucose = get_meta("max_glucose")
-@onready var health = max_health
+@onready var health = 2000
 @onready var glucose = max_glucose
-@onready var movement_speed = get_meta("movement_speed")
 
-
-@onready var health_regen = get_meta("health_regen")
-@onready var glucose_regen = get_meta("glucose_regen")
-var movement_delta: float
 
 # attack
 #var attack_switch_timer: Timer
@@ -64,33 +59,11 @@ var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack] #var all
 
 var attk_in_progress := false
 
-#enum Target_type {player, cell}
-@onready var target
-
-
-# get navigation agent and raycast
-@onready var nav: NavigationAgent2D = $CharacterBody2D/NavigationAgent2D
-@onready var raycast: RayCast2D = $CharacterBody2D/LOS
-var path_current
-var path_next
-var segment_dist
-var idle_target_pos
-
-
-
 # Godot functions
 
 func _ready() -> void:
-	await Events.level == Events.Levels.heart
-	hitbox.body_entered.connect(_on_hitbox_body_entered)
-	Events.boss_health_changed.emit(health, max_health, false)
+	pass
 
-func _process(delta: float) -> void:
-	if health_regen > 0:
-		health = clamp(health + health_regen * delta, -max_health, max_health)
-		_change_health(health, max_health)
-	if glucose_regen > 0:
-		glucose = clamp(glucose + glucose_regen * delta, -max_glucose, max_glucose)
 	
 func _physics_process(_delta: float) -> void:
 	player_character = _get_player()
@@ -105,7 +78,6 @@ func _physics_process(_delta: float) -> void:
 		Events.soundtrack_request.emit("res://sounds/Tenebre_Rosso_Sangue.mp3")
 	elif not heart_activated:
 		attk_in_progress = true
-	
 	
 	if not attk_in_progress:
 		_attack_switch()
@@ -183,33 +155,6 @@ func _attack_toxin_stream() -> void:
 		toxin.velocity = (vec_to_player + Vector2.RIGHT.rotated(randf_range(-10,10))) * toxin_speed
 	attk_in_progress = false
 
-func _move_to_position(move_pos:Vector2) -> void:
-	nav.set_target_position(move_pos)
-
-	if NavigationServer2D.map_get_iteration_id(nav.get_navigation_map()) == 0:
-		boss_character.velocity = Vector2.ZERO
-		return
-	if nav.is_navigation_finished():
-		boss_character.velocity = Vector2.ZERO
-		return
-
-	var next_path_position: Vector2 = nav.get_next_path_position()
-	var target_direction: Vector2 = boss_character.global_position.direction_to(next_path_position)
-	var preferred_velocity: Vector2 = target_direction * movement_speed
-
-	if nav.avoidance_enabled:
-		nav.set_velocity(preferred_velocity)
-	else:
-		boss_character.velocity.x = clamp(preferred_velocity.x,-movement_speed,movement_speed)
-		boss_character.velocity.y = clamp(preferred_velocity.y,-movement_speed,movement_speed)
-
-func _on_velocity_computed(safe_velocity: Vector2) -> void:
-	boss_character.velocity = safe_velocity
-
-	if target_pos:
-		_move_to_position(target_pos)
-
-
 # Health:
 func _change_health(new: float, max_value: float):
 	Events.boss_health_changed.emit(new, max_value, true)
@@ -217,7 +162,6 @@ func _change_health(new: float, max_value: float):
 
 func _attack_switch() -> void:
 	curr_attack = allowed_attacks.pick_random()
-
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if state == State.dying:
@@ -231,6 +175,8 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		num.global_position = boss_character.global_position + Vector2(0, -20)
 		num.setup(amount)
 		
+		body.queue_free()
+		
 		_change_health(health,max_health)
 	if health <= 0:
 		_die()
@@ -238,6 +184,7 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 func _die() -> void:
 	print("died")
 	queue_free() # Temporary, add win condition...
+	get_tree().change_scene_to_file("res://scenes/victory.tscn")
 
 func save() -> Dictionary:
 	var save_dict = {
@@ -254,9 +201,6 @@ func save() -> Dictionary:
 		"max_health": max_health,
 		"glucose": glucose,
 		"max_glucose": max_glucose,
-		"health_regen": health_regen,
-		"glucose_regen": glucose_regen,
-		"movement_speed": movement_speed,
 		"stream_attack_damage": stream_attack_damage,
 		"spin_attack_damage": spin_attack_damage,
 		"allowed_attacks": allowed_attacks,
@@ -275,9 +219,6 @@ func load_data(data: Dictionary) -> void:
 	max_health = data["max_health"]
 	glucose = data["glucose"]
 	max_glucose = data["max_glucose"]
-	health_regen = data["health_regen"]
-	glucose_regen = data["glucose_regen"]
-	movement_speed = data["movement_speed"]
 	stream_attack_damage = data["stream_attack_damage"]
 	spin_attack_damage = data["spin_attack_damage"]
 
