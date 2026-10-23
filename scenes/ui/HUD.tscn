@@ -100,10 +100,6 @@ offset_right = 1013.0
 offset_bottom = 81.0
 label_settings = ExtResource("8_l20r4")
 
-[node name="Control" type="Control" parent="." unique_id=2008539748]
-layout_mode = 3
-anchors_preset = 0
-
 [node name="Gold" type="Label" parent="." unique_id=314868009]
 offset_left = 201.0
 offset_top = 107.0
@@ -120,19 +116,24 @@ offset_bottom = 176.0
 text = "Gold = "
 label_settings = SubResource("LabelSettings_l20r4")
 
-[node name="Container" type="Container" parent="." unique_id=1800757925]
-offset_left = 453.0
-offset_right = 933.0
-offset_bottom = 96.0
+[node name="Control" type="Control" parent="." unique_id=2008539748]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 449.0
+offset_top = 24.0
+offset_right = 449.0
+offset_bottom = 24.0
 
 [node name="BossBarLight" type="TextureProgressBar" parent="Control" unique_id=100213931]
 layout_mode = 0
 offset_right = 80.0
 offset_bottom = 16.0
+scale = Vector2(6, 6)
 texture_progress = ExtResource("11_p4k5r")
 
 [node name="BossBar" type="TextureProgressBar" parent="Control" unique_id=41840727]
 layout_mode = 0
+scale = Vector2(6, 6)
 value = 50.0
 texture_over = ExtResource("9_euikm")
 texture_progress = ExtResource("10_p4k5r")
