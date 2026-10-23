@@ -30,6 +30,7 @@ metadata/spin_attack_damage = 20.0
 position = Vector2(8, 16)
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=421746252]
+scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_xg4kr")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D" unique_id=965680044]
