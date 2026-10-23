@@ -12,8 +12,8 @@ signal enemy_resized
 @warning_ignore_restore("unused_signal")
 
 var enemy_size_divisor: float = 2.0
-var enemy_max_scale: float = 1.5 # 3x starting size
-var enemy_min_scale: float = 0.25 # 1/2x starting size
+var enemy_max_scale: float = 1 # 2x starting size
+var enemy_min_scale: float = 0.5 # 1/2x starting size
 
 var effects_scale: float = 100.0
 
@@ -66,6 +66,7 @@ func _change_sfx_volume(new: float) -> void:
 	sfx_volume = new
 	
 func _enemy_scale_too_large(enemy_scale: float) -> void:
-	enemy_size_divisor = enemy_scale / enemy_max_scale
+	enemy_size_divisor *= enemy_scale / enemy_max_scale
+	print(enemy_size_divisor)
 
 # obligatory pf 🏳️‍🌈

@@ -103,7 +103,7 @@ func _process(delta: float) -> void:
 	tween.tween_property(
 		self,
 		"scale",
-		Vector2(get_meta("scale"),get_meta("scale")) / Events.enemy_size_divisor,
+		clamp(Vector2(get_meta("scale"),get_meta("scale")) / Events.enemy_size_divisor,Vector2(Events.enemy_min_scale,Events.enemy_min_scale),Vector2(INF,INF)),
 		time_to_resize
 	)
 	if scale.x < Events.enemy_min_scale:
