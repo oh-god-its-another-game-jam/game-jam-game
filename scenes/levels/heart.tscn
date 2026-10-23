@@ -80,18 +80,13 @@ position = Vector2(343, -370)
 [node name="Player" parent="." unique_id=2017533679 instance=ExtResource("7_2velq")]
 position = Vector2(64, -104)
 
-[node name="tmp" type="Node2D" parent="." unique_id=1173172782]
-scale = Vector2(0.5, 0.5)
+[node name="PlayerCamera" parent="." unique_id=131873372 instance=ExtResource("8_4x4nn")]
 
-[node name="PlayerCamera" parent="tmp" unique_id=131873372 instance=ExtResource("8_4x4nn")]
-scale = Vector2(2, 2)
+[node name="Sound" parent="." unique_id=457052338 instance=ExtResource("9_dyke0")]
 
-[node name="Sound" parent="tmp" unique_id=457052338 instance=ExtResource("9_dyke0")]
-scale = Vector2(2, 2)
+[node name="HUD" parent="." unique_id=735888115 instance=ExtResource("10_35075")]
 
-[node name="HUD" parent="tmp" unique_id=735888115 instance=ExtResource("10_35075")]
-
-[node name="BeatPath" type="Path2D" parent="." unique_id=1285262696 groups=["heart"]]
+[node name="BeatPath" type="Path2D" parent="." unique_id=1285262696 groups=["heart_stream_follower"]]
 z_index = 3
 position = Vector2(1616.7904, -8)
 scale = Vector2(2.903169, 1)
@@ -99,13 +94,6 @@ curve = ExtResource("10_4x4nn")
 script = ExtResource("2_383bh")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="BeatPath" unique_id=792553562]
-position = Vector2(-374.34625, -355)
-rotation = 1.4680256
+position = Vector2(-731.1977, -302)
+rotation = -0.17425464
 scale = Vector2(0.3444512, 1)
-
-[node name="BeatArea" type="Area2D" parent="BeatPath" unique_id=575841647]
-position = Vector2(-556.561, 0)
-scale = Vector2(0.3444512, 1)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BeatPath/BeatArea" unique_id=1307898369]
-polygon = PackedVector2Array(-1056, -309, -1034, -150, -913, 96, -410, 612, 104, 793, 610, 826, 922, 509, 929, 67, 841, -262, 644, -487, 624, -741, 437, -940, 165, -1000, 33, -950, 5, -806, -176, -706, -458, -667, -695, -753, -877, -691, -999, -533)

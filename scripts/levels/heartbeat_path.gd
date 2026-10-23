@@ -2,17 +2,13 @@ extends Path2D
 
 @onready var sound = get_tree().get_first_node_in_group("sound")
 
-@onready var beat_area = $BeatArea
 
-var strength := 600.0
-var beats_per_pump := 8.0
+var strength := 200.0
+var beats_per_pump := 4.0
 var pump_length := 1.0
 
 func _ready() -> void:
 	await get_tree().physics_frame
-	for body in beat_area.get_overlapping_bodies():
-		if body.is_in_group("Player"):
-			body.in_heart_stream = true
 
 
 func get_beat() -> float:
