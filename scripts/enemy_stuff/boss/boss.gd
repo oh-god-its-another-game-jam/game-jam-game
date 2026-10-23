@@ -128,7 +128,10 @@ func _attack_spin() -> void:
 
 func _attack_ground_shake() -> void:
 	attk_in_progress = true
-	
+	for x in range(3):
+		await get_tree().create_timer(1).timeout
+		Events.screen_ripple.emit(get_viewport().get_canvas_transform() * global_position)
+		# I'll do damage here later
 	attk_in_progress = false
 
 func _attack_toxin_stream() -> void:
