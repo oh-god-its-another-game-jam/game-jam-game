@@ -129,62 +129,63 @@ func _create_spawn_timer() -> void:
 		spawn_timer.paused = false
 
 func _mutate_chance() -> void:
-	if randf() * 100 < attack_damage_mutation_chance:
-		print("Attack Damage Mutation in ", self , " in organ ", get_parent().name)
-		rand = randf_range(0.9,1.2)
-		enemy_attack_damage *= rand
-		enemy_scale *= rand
-	if randf() * 100 < attack_range_mutation_chance:
-		print("Attack Range Mutation in ",self, " in organ ", get_parent().name)
-		rand = randf_range(0.9,1.2)
-		enemy_attack_range *= rand
-		enemy_scale *= rand
-	if randf() * 100 < attack_reload_mutation_chance:
-		print("Attack Reload Mutation in ",self, " in organ ", get_parent().name)
-		rand = randf_range(0.9,1.2)
-		enemy_attack_reload *= rand
-		enemy_scale *= rand
-	if randf() * 100 < los_range_mutation_chance:
-		print("LOS Range Mutation in ",self, " in organ ", get_parent().name)
-		rand = randf_range(0.9,1.2)
-		enemy_los_range *= rand
-		enemy_scale *= rand
-	if randf() * 100 < health_regen_mutation_chance:
-		print("Enemy Health Regen Mutation in ",self, " in organ ", get_parent().name)
-		if enemy_health_regen != 0:
+	if controlled_by == "enemy":
+		if randf() * 100 < attack_damage_mutation_chance:
+			print("Attack Damage Mutation in ", self , " in organ ", get_parent().name)
 			rand = randf_range(0.9,1.2)
-			enemy_health_regen *= rand
-			enemy_scale *= rand
-		else:
-			rand = randf_range(0,1)
-			enemy_health_regen = rand
-			enemy_scale *= (1+rand)
-	if randf() * 100 < max_health_mutation_chance:
-		print("Max Health Mutation in ",self, " in organ ", get_parent().name)
-		rand = randf_range(0.9,1.2)
-		enemy_max_health *= rand
-		enemy_scale *= rand
-	if randf() * 100 < max_glucose_mutation_chance:
-		print("Max Glucose Mutation in ",self, " in organ ", get_parent().name)
-		rand = randf_range(0.9,1.2)
-		enemy_max_glucose *= rand
-		enemy_scale *= rand
-	if randf() * 100 < glucose_regen_mutation_chance:
-		print("Glucose Regen Mutation in ",self, " in organ ", get_parent().name)
-		if enemy_glucose_regen != 0:
+			enemy_attack_damage *= rand
+			enemy_scale *= rand/2
+		if randf() * 100 < attack_range_mutation_chance:
+			print("Attack Range Mutation in ",self, " in organ ", get_parent().name)
 			rand = randf_range(0.9,1.2)
-			enemy_glucose_regen *= rand
-			enemy_scale *= rand
-		else:
-			rand = randf_range(0,1)
-			enemy_glucose_regen = rand
-			enemy_scale *= (1+rand)
-	if randf() * 100 < movement_speed_mutation_chance:
-		print("Movement Speed Mutation in ",self, " in organ ", get_parent().name)
-		rand = randf_range(0.9,1.2)
-		enemy_movement_speed *= rand
-		enemy_scale *= rand
-	_create_enemy()
+			enemy_attack_range *= rand
+			enemy_scale *= rand/2
+		if randf() * 100 < attack_reload_mutation_chance:
+			print("Attack Reload Mutation in ",self, " in organ ", get_parent().name)
+			rand = randf_range(0.9,1.2)
+			enemy_attack_reload *= rand
+			enemy_scale *= rand/2
+		if randf() * 100 < los_range_mutation_chance:
+			print("LOS Range Mutation in ",self, " in organ ", get_parent().name)
+			rand = randf_range(0.9,1.2)
+			enemy_los_range *= rand
+			enemy_scale *= rand/2
+		if randf() * 100 < health_regen_mutation_chance:
+			print("Enemy Health Regen Mutation in ",self, " in organ ", get_parent().name)
+			if enemy_health_regen != 0:
+				rand = randf_range(0.9,1.2)
+				enemy_health_regen *= rand
+				enemy_scale *= rand/2
+			else:
+				rand = randf_range(0,1)
+				enemy_health_regen = rand
+				enemy_scale *= (1+rand)/2
+		if randf() * 100 < max_health_mutation_chance:
+			print("Max Health Mutation in ",self, " in organ ", get_parent().name)
+			rand = randf_range(0.9,1.2)
+			enemy_max_health *= rand
+			enemy_scale *= rand/2
+		if randf() * 100 < max_glucose_mutation_chance:
+			print("Max Glucose Mutation in ",self, " in organ ", get_parent().name)
+			rand = randf_range(0.9,1.2)
+			enemy_max_glucose *= rand
+			enemy_scale *= rand/2
+		if randf() * 100 < glucose_regen_mutation_chance:
+			print("Glucose Regen Mutation in ",self, " in organ ", get_parent().name)
+			if enemy_glucose_regen != 0:
+				rand = randf_range(0.9,1.2)
+				enemy_glucose_regen *= rand
+				enemy_scale *= rand/2
+			else:
+				rand = randf_range(0,1)
+				enemy_glucose_regen = rand
+				enemy_scale *= (1+rand)/2
+		if randf() * 100 < movement_speed_mutation_chance:
+			print("Movement Speed Mutation in ",self, " in organ ", get_parent().name)
+			rand = randf_range(0.9,1.2)
+			enemy_movement_speed *= rand
+			enemy_scale *= rand/2
+		_create_enemy()
 
 func _create_enemy() -> void:
 	var node = load("res://scenes/enemy_stuff/basic_enemy.tscn").instantiate()
@@ -225,6 +226,17 @@ func _virus_capture() -> void:
 		spawn_timer.paused = false
 	
 	# Set variables for duplication
+	enemy_attack_damage = recent_shooter.get_meta("attack_damage")
+	enemy_attack_range = recent_shooter.get_meta("attack_range")
+	enemy_attack_reload = recent_shooter.get_meta("attack_reload")
+	enemy_glucose_regen = recent_shooter.get_meta("glucose_regen")
+	enemy_health_regen = recent_shooter.get_meta("health_regen")
+	enemy_los_range = recent_shooter.get_meta("los_range")
+	enemy_max_glucose = recent_shooter.get_meta("max_glucose")
+	enemy_max_health = recent_shooter.get_meta("max_health")
+	enemy_movement_speed = recent_shooter.get_meta("movement_speed")
+	enemy_scale = recent_shooter.get_meta("scale")
+	
 
 func _player_capture() -> void:
 	captured_by_player.emit()
