@@ -66,16 +66,19 @@ texture = ExtResource("2_bpmg5")
 position = Vector2(0, -12)
 
 [node name="Egophigus" type="Sprite2D" parent="." unique_id=1431020278]
+z_index = -1
 position = Vector2(-31, 155)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("3_jqnip")
 
 [node name="Lung1" type="Sprite2D" parent="." unique_id=1861311598]
+z_index = -1
 position = Vector2(-43, 179)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("4_ltqae")
 
 [node name="Lung2" type="Sprite2D" parent="." unique_id=884578186]
+z_index = -1
 position = Vector2(-3.9999123, 200.49997)
 scale = Vector2(1.1466668, 1.1970422)
 texture = ExtResource("5_qyotp")
