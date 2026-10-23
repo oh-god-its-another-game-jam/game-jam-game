@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://qga0burrlqo7" path="res://scripts/enemy_stuff/enemy_nav_agent.gd" id="1_hwjcl"]
 [ext_resource type="Script" uid="uid://b76bcts4sltmn" path="res://scripts/enemy_stuff/boss/boss.gd" id="1_j8cug"]
-[ext_resource type="Texture2D" uid="uid://drnm07ky1x2ah" path="res://artwork/enemy_stuff/Boss.png" id="2_xg4kr"]
+[ext_resource type="Texture2D" uid="uid://drnm07ky1x2ah" path="res://artwork/enemy_stuff/boss/Boss.png" id="2_xg4kr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yx0xg"]
 radius = 22.522211
@@ -19,7 +19,7 @@ script = ExtResource("1_j8cug")
 metadata/max_health = 2000.0
 metadata/max_glucose = 1000.0
 metadata/movement_speed = 0.0
-metadata/health_regen = 0.0
+metadata/health_regen = 5.0
 metadata/glucose_regen = 0.0
 metadata/stream_attack_damage = 20.0
 metadata/spin_attack_damage = 20.0
@@ -30,6 +30,7 @@ metadata/spin_attack_damage = 20.0
 position = Vector2(8, 16)
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D" unique_id=421746252]
+scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_xg4kr")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D" unique_id=965680044]

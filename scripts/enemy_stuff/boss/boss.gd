@@ -107,8 +107,8 @@ func _check_stage() -> void:
 
 func _attack_spawn_enemies() -> void:
 	attk_in_progress = true
-	for x in range(10):
-		await get_tree().create_timer(1.0).timeout
+	for x in range(5):
+		await get_tree().create_timer(2.0).timeout
 		var enemy = basic_enemy_scene.instantiate()
 		add_child(enemy)
 		enemy.global_position = mouth.global_position
