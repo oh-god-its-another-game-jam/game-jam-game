@@ -18,6 +18,8 @@ func _process(_delta: float) -> void:
 	if not is_instance_valid("Player"):
 		player = get_tree().get_first_node_in_group("Player")
 	if visible:
+		if $GoldIndicator.text != "Gold = " + str(player.gold):
+			$GoldIndicator.text = "Gold = " + str(player.gold)
 		_check_upgrades()
 		get_tree().paused = true
 		if Input.is_action_just_pressed("ui_down") or \
