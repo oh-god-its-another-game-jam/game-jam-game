@@ -7,6 +7,10 @@ var basic_enemy_scene = preload("res://scenes/enemy_stuff/basic_enemy.tscn")
 
 @onready var boss_character = $CharacterBody2D
 
+@onready var hitbox = $CharacterBody2D/Hitbox
+
+
+
 # --- VARIABLES ---
 var rand: float
 # import toxins
@@ -48,7 +52,7 @@ var state := State.attack
 
 enum Attack {spawn_enemies, spin_attack, ground_shake, toxin_stream}
 var curr_attack = Attack.spawn_enemies
-var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack]
+var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack] #var allowed_attacks: Array = [Attack.spawn_enemies, Attack.spin_attack, Attack.ground_shake, Attack.toxin_stream]
 
 var attk_in_progress := false
 
@@ -69,6 +73,7 @@ var idle_target_pos
 # Godot functions
 
 func _ready() -> void:
+	hitbox.body_entered.connect(_on_hitbox_body_entered)
 	Events.boss_health_changed.emit(health, max_health, false)
 
 func _process(delta: float) -> void:
@@ -197,7 +202,6 @@ func _attack_switch() -> void:
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if state == State.dying:
 		return
-
 	if body.is_in_group("Antigens"):
 		var amount = body.get_meta("attack_damage")
 		health -= amount
@@ -209,10 +213,10 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		
 		_change_health(health,max_health)
 	if health <= 0:
-		Events.enemy_died_sound.emit()
 		_die()
 
 func _die() -> void:
+	print("died")
 	queue_free() # Temporary, add win condition...
 
 func save() -> Dictionary:
