@@ -21,6 +21,15 @@ radius = 520.0
 cull_mode = 2
 polygon = PackedVector2Array(31, 0, 28.64, 11.86, 21.92, 21.92, 11.86, 28.64, 0, 31, -11.86, 28.64, -21.92, 21.92, -28.64, 11.86, -31, 0, -28.64, -11.86, -21.92, -21.92, -11.86, -28.64, 0, -31, 11.86, -28.64, 21.92, -21.92, 28.64, -11.86, 31, 0)
 
+[sub_resource type="Gradient" id="Gradient_vnd7g"]
+offsets = PackedFloat32Array(0, 0.6987952)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_20irt"]
+gradient = SubResource("Gradient_vnd7g")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="Player" type="CharacterBody2D" unique_id=2017533679 groups=["Persist", "Player", "movable"]]
 scale = Vector2(0.5, 0.5)
 motion_mode = 1
@@ -60,5 +69,9 @@ scale = Vector2(2.4, 2.4)
 sprite_frames = ExtResource("5_060su")
 centered = false
 offset = Vector2(-8, -23)
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=2016729870]
+scale = Vector2(3, 3)
+texture = SubResource("GradientTexture2D_20irt")
 
 [connection signal="body_entered" from="PlayerHitbox" to="." method="_on_hitbox_body_entered"]
