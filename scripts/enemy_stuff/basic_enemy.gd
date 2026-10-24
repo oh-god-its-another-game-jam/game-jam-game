@@ -116,6 +116,8 @@ func _ready() -> void:
 	_change_health(health, max_health)
 
 func _process(delta: float) -> void:
+	if not is_instance_valid(character) or not character.is_inside_tree() or not character.can_process():
+		return
 	if not is_instance_valid(hud):
 		hud = get_tree().get_first_node_in_group("HUD")
 		
@@ -138,6 +140,8 @@ func _process(delta: float) -> void:
 		glucose = clamp(glucose + glucose_regen * delta, -max_glucose, max_glucose)
 	
 func _physics_process(delta: float) -> void:
+	if not is_instance_valid(character) or not character.is_inside_tree() or not character.can_process():
+		return
 	if not wait_time_timer.is_stopped():
 		attack_timer.paused = true
 		global_position += boss_set_vec * boss_set_speed * delta

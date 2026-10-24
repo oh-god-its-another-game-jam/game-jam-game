@@ -1,5 +1,7 @@
 extends Node
 
+@onready var player = get_tree().get_first_node_in_group("Player")
+
 @warning_ignore_start("unused_signal")
 signal enemy_died_sound
 signal error_sound
@@ -33,10 +35,48 @@ var meme_SFX: bool = false
 var tutorial = false
 var allowed_actions: Dictionary
 
+var wait_time_timer: Timer
+
 # Godot functions
 
 func _ready() -> void:
+	wait_time_timer = Timer.new()
+	wait_time_timer.wait_time = 0.5
+	wait_time_timer.one_shot = false
+	add_child(wait_time_timer)
+	wait_time_timer.timeout.connect(_cull_enemies.bind())
+	wait_time_timer.start()
+	
 	_toggle_tutorial(false)
+
+func _cull_enemies():
+	if player == null:
+		player = get_tree().get_first_node_in_group("Player")
+		if player == null:
+			return
+	var closest = _get_closest_enemies(10)
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if enemy == null:
+			return
+		if enemy not in closest:
+			enemy.process_mode = Node.PROCESS_MODE_DISABLED
+		elif enemy in closest:
+			enemy.process_mode = Node.PROCESS_MODE_INHERIT
+	
+
+func _get_closest_enemies(num: int) -> Array[Node2D]:
+	var enemy := get_tree().get_nodes_in_group("enemies")
+	
+	var origin: Vector2 = player.global_position
+	enemy.sort_custom(func(a: Node2D, b: Node2D) -> bool:
+		return origin.distance_squared_to(a.global_position) < origin.distance_squared_to(b.global_position)
+	)
+
+	var result: Array[Node2D] = []
+	for i in mini(num, enemy.size()):
+		result.append(enemy[i])
+	return result
+
 
 # User functions
 
