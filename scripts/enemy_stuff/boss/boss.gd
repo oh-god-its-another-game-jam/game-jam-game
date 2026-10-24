@@ -138,8 +138,8 @@ func _attack_ground_shake() -> void:
 	for x in range(3):
 		await get_tree().create_timer(1).timeout
 		Events.screen_ripple.emit(get_viewport().get_canvas_transform() * global_position)
-		if player_character.global_position.distance_to(global_position) < 500:
-			player_character.ext_heal(-50)
+		#if player_character.global_position.distance_to(global_position) < 500:
+			#player_character.ext_heal(-50)
 	attk_in_progress = false
 
 func _attack_toxin_stream() -> void:

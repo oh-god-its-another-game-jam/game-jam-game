@@ -41,7 +41,7 @@ var wait_time_timer: Timer
 
 func _ready() -> void:
 	wait_time_timer = Timer.new()
-	wait_time_timer.wait_time = 0.5
+	wait_time_timer.wait_time = 0.75
 	wait_time_timer.one_shot = false
 	add_child(wait_time_timer)
 	wait_time_timer.timeout.connect(_cull_enemies.bind())
@@ -54,7 +54,7 @@ func _cull_enemies():
 		player = get_tree().get_first_node_in_group("Player")
 		if player == null:
 			return
-	var closest = _get_closest_enemies(10)
+	var closest = _get_closest_enemies(5)
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		if enemy == null:
 			return
